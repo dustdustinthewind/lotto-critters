@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://d1n2jjrsyxnk"]
+
+[node name="SingleMachineView" type="MarginContainer" unique_id=328976583]
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+
+[node name="SingleMachineView" type="HBoxContainer" parent="." unique_id=87521775]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Picture" type="ReferenceRect" parent="SingleMachineView" unique_id=1983434279]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+border_width = 5.0
+editor_only = false
+
+[node name="WellBeing_Behavior_Mood_stats" type="ReferenceRect" parent="SingleMachineView" unique_id=48470899]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+border_color = Color(0.2957216, 0.4952805, 1, 1)
+border_width = 5.0
+editor_only = false
+
+[node name="Upgrades_Actions" type="ReferenceRect" parent="SingleMachineView" unique_id=529794356]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+border_color = Color(0.83610076, 0.0012215584, 0.92809457, 1)
+border_width = 5.0
+editor_only = false
+
+[node name="Performance" type="ReferenceRect" parent="SingleMachineView" unique_id=1356841280]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+border_color = Color(0, 0.7137255, 0.13333334, 1)
+border_width = 5.0
+editor_only = false

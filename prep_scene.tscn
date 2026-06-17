@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://ki21jl8c1wjv"]
 
+[ext_resource type="PackedScene" uid="uid://d1n2jjrsyxnk" path="res://prep_single_machine.tscn" id="1_al28c"]
+
 [sub_resource type="Theme" id="Theme_gkfgl"]
 
 [node name="prep_scene" type="Control" unique_id=1008163755]
@@ -23,42 +25,11 @@ offset_bottom = 670.0
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="StatBook/AllMachines" unique_id=911712707]
+[node name="MarginContainer" parent="StatBook/AllMachines" unique_id=328976583 instance=ExtResource("1_al28c")]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
 
-[node name="SingleMachineView" type="HBoxContainer" parent="StatBook/AllMachines/MarginContainer" unique_id=146461777]
+[node name="MarginContainer2" parent="StatBook/AllMachines" unique_id=2087283478 instance=ExtResource("1_al28c")]
 layout_mode = 2
-theme_override_constants/separation = 15
 
-[node name="Picture" type="ReferenceRect" parent="StatBook/AllMachines/MarginContainer/SingleMachineView" unique_id=28964544]
-custom_minimum_size = Vector2(150, 100)
+[node name="MarginContainer3" parent="StatBook/AllMachines" unique_id=1073727854 instance=ExtResource("1_al28c")]
 layout_mode = 2
-size_flags_horizontal = 0
-border_width = 5.0
-editor_only = false
-
-[node name="WellBeing_Behavior_Mood_stats" type="ReferenceRect" parent="StatBook/AllMachines/MarginContainer/SingleMachineView" unique_id=2023240816]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-border_color = Color(0.2957216, 0.4952805, 1, 1)
-border_width = 5.0
-editor_only = false
-
-[node name="Upgrades_Actions" type="ReferenceRect" parent="StatBook/AllMachines/MarginContainer/SingleMachineView" unique_id=1824408041]
-custom_minimum_size = Vector2(150, 100)
-layout_mode = 2
-border_color = Color(0.83610076, 0.0012215584, 0.92809457, 1)
-border_width = 5.0
-editor_only = false
-
-[node name="Performance" type="ReferenceRect" parent="StatBook/AllMachines/MarginContainer/SingleMachineView" unique_id=1803453938]
-custom_minimum_size = Vector2(400, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-border_color = Color(0, 0.7137255, 0.13333334, 1)
-border_width = 5.0
-editor_only = false
