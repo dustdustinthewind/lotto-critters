@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bmr8g3n4bxxe6"]
+
+[ext_resource type="Script" uid="uid://b4c0omwk6rcl3" path="res://Casino.cs" id="1_pyidc"]
+[ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://LottoMachine.cs" id="2_vvh5c"]
+
+[node name="RootProbably" type="Node2D" unique_id=432179694]
+
+[node name="Casino" type="Node" parent="." unique_id=551408869]
+script = ExtResource("1_pyidc")
+
+[node name="Lotto Machine" type="Node" parent="." unique_id=658435304]
+script = ExtResource("2_vvh5c")
+
+[node name="Clock" type="Node" parent="." unique_id=1414021763]

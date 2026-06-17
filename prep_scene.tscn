@@ -25,11 +25,5 @@ offset_bottom = 670.0
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
-[node name="MarginContainer" parent="StatBook/AllMachines" unique_id=328976583 instance=ExtResource("1_al28c")]
-layout_mode = 2
-
-[node name="MarginContainer2" parent="StatBook/AllMachines" unique_id=2087283478 instance=ExtResource("1_al28c")]
-layout_mode = 2
-
-[node name="MarginContainer3" parent="StatBook/AllMachines" unique_id=1073727854 instance=ExtResource("1_al28c")]
+[node name="SingleMachineView" parent="StatBook/AllMachines" unique_id=328976583 instance=ExtResource("1_al28c")]
 layout_mode = 2
