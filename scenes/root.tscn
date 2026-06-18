@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmunwnkp4pjb2" path="res://textures/casinofloor.png" id="2_jh1ax"]
 [ext_resource type="PackedScene" uid="uid://e7j1o2hw8r5m" path="res://scenes/counter.tscn" id="3_kycxp"]
 [ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="4_j287u"]
-[ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scenes/Customer.cs" id="5_jh1ax"]
+[ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scripts/Customer.cs" id="5_jh1ax"]
 
 [node name="GameRootProbably" type="Node2D" unique_id=432179694]
 
