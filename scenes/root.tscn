@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bmr8g3n4bxxe6"]
+
+[ext_resource type="Script" uid="uid://b4c0omwk6rcl3" path="res://scripts/Casino.cs" id="1_sqa0i"]
+[ext_resource type="Texture2D" uid="uid://dmunwnkp4pjb2" path="res://textures/casinofloor.png" id="2_jh1ax"]
+[ext_resource type="PackedScene" uid="uid://e7j1o2hw8r5m" path="res://scenes/counter.tscn" id="3_kycxp"]
+[ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="4_j287u"]
+
+[node name="GameRootProbably" type="Node2D" unique_id=432179694]
+
+[node name="Casino" type="Node" parent="." unique_id=551408869]
+script = ExtResource("1_sqa0i")
+
+[node name="Casinofloor" type="Sprite2D" parent="Casino" unique_id=207199944]
+texture = ExtResource("2_jh1ax")
+centered = false
+
+[node name="Counter" parent="Casino/Casinofloor" unique_id=821975482 instance=ExtResource("3_kycxp")]
+position = Vector2(64, 128)
+
+[node name="Counter2" parent="Casino/Casinofloor" unique_id=1685303288 instance=ExtResource("3_kycxp")]
+position = Vector2(64, 336)
+
+[node name="Counter3" parent="Casino/Casinofloor" unique_id=197329088 instance=ExtResource("3_kycxp")]
+position = Vector2(64, 536)
+
+[node name="Lotto Machine" type="Node" parent="." unique_id=658435304]
+script = ExtResource("4_j287u")
+
+[node name="Clock" type="Node" parent="." unique_id=1414021763]

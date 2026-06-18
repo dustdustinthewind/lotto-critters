@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ki21jl8c1wjv"]
 
-[ext_resource type="PackedScene" uid="uid://d1n2jjrsyxnk" path="res://prep_single_machine.tscn" id="1_al28c"]
+[ext_resource type="PackedScene" uid="uid://d1n2jjrsyxnk" path="res://scenes/prep_single_machine.tscn" id="1_al28c"]
 
 [sub_resource type="Theme" id="Theme_gkfgl"]
 
