@@ -3,17 +3,12 @@ using System;
 
 public partial class LottoMachine : Node
 {
-	public float Health; 
-  public float healthDrain; // how fast current health drains due to factors like hunger/wear
-	public float maxHealth; // the current max health
-	public float maxHealthLossRate; // how fast max health drains due to factors like age
+
+  public int machineCondition // Hunger and Wear and Tear and Mood that might affect the working of a machine.
 	
 	public int CurrentAge;
 
   public Payout Payouts;
-	
-  public float Mood; // from 0 (pissed/uncompliant) to 10 (content/compliant)
-  public float moodDrain; // Neuroticism, could be negative for positive mood gain
   
   public float Evil; // lol
 

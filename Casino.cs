@@ -6,6 +6,7 @@ public partial class Casino : Node
 {
   public int Money; // how much money we gots
   public List<int> historicalMoney; // Keeps track of money over time
+  public int Taxes // Daily property taxes that drain your resources
 
   public float Reputation; // 1-10 / 5 star system
 
