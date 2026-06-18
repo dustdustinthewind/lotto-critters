@@ -6,5 +6,6 @@
 script = ExtResource("1_wcxvy")
 
 [node name="Shape" type="Polygon2D" parent="." unique_id=1103078276]
+scale = Vector2(0.721, 1)
 color = Color(0.52, 0.2236, 0.052000012, 1)
 polygon = PackedVector2Array(0, 0, 1000, 0, 1000, 100, 0, 100)
