@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://e7j1o2hw8r5m"]
+
+[ext_resource type="Script" uid="uid://cio730pfyhrg6" path="res://Counter.cs" id="1_wcxvy"]
+
+[node name="Counter" type="Node2D" unique_id=1685303288]
+script = ExtResource("1_wcxvy")
+
+[node name="Shape" type="Polygon2D" parent="." unique_id=1103078276]
+color = Color(0.52, 0.2236, 0.052000012, 1)
+polygon = PackedVector2Array(0, 0, 1000, 0, 1000, 100, 0, 100)
