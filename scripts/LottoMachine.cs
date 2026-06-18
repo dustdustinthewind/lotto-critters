@@ -4,9 +4,9 @@ using System;
 public partial class LottoMachine : Node
 {
 
-  public int machineCondition // Hunger and Wear and Tear and Mood that might affect the working of a machine.
-	
-	public int CurrentAge;
+  public int machineCondition; // Hunger and Wear and Tear and Mood that might affect the working of a machine.
+
+  public int CurrentAge;
 
   public Payout Payouts;
   
@@ -22,6 +22,8 @@ public partial class LottoMachine : Node
   public LottoMachine(LottoMachine parent1, LottoMachine parent2)
   {
 	// genetic-swapping here
+	// genes are decided from range of parents
+	// genetic bonuses in most cases
   }
 	
 	// Called when the node enters the scene tree for the first time.
