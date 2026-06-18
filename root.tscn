@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4c0omwk6rcl3" path="res://Casino.cs" id="1_pyidc"]
 [ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://LottoMachine.cs" id="2_vvh5c"]
+[ext_resource type="Texture2D" uid="uid://dmunwnkp4pjb2" path="res://casinofloor.png" id="3_vvh5c"]
 
 [node name="RootProbably" type="Node2D" unique_id=432179694]
 
@@ -12,3 +13,7 @@ script = ExtResource("1_pyidc")
 script = ExtResource("2_vvh5c")
 
 [node name="Clock" type="Node" parent="." unique_id=1414021763]
+
+[node name="Casinofloor" type="Sprite2D" parent="." unique_id=207199944]
+texture = ExtResource("3_vvh5c")
+centered = false
