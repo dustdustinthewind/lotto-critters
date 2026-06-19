@@ -16,10 +16,7 @@ public partial class Clock : Node
 		}
 	}
 
-	public ulong PlayTimeElapsedInSeconds
-	{
-		get => PlayTimeElapsed / 1000;
-	}
+	public ulong PlayTimeElapsedInSeconds => PlayTimeElapsed / 1000;
 	
 	private ulong lastFullSecond = 0;
 
