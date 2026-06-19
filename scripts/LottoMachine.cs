@@ -9,7 +9,7 @@ public partial class LottoMachine : Node2D
 
 	public Payout Payouts;
 	
-	public float Evil; // lol
+	public float Evil; // kinda of a compliance/event-important variable
 
 	public int CostPerPlay; // controllable by player
 	public int TimeToPlay;

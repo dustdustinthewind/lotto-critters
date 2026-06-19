@@ -32,6 +32,7 @@ project/assembly_name="lotto-critters"
 
 folder_colors={
 "res://asset-project-files/": "gray",
+"res://fonts/": "orange",
 "res://lfs/": "gray",
 "res://scenes/": "green",
 "res://scripts/": "purple",

@@ -10,13 +10,14 @@ public partial class Casino : Sprite2D
 
 	public float Reputation; // 1-10 / 5 star system
 
-	private Clock clock = new Clock();
+	private Clock clock;
 
 	public int MaxNumberMachines; // how many machines you can have at once
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		clock = (Clock)GetNode<Node>("Clock");
 		clock.RestartClock();
 	}
 
