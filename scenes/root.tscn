@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://e7j1o2hw8r5m" path="res://scenes/counter.tscn" id="3_kycxp"]
 [ext_resource type="FontFile" uid="uid://d0qbm3fjk3go" path="res://fonts/ChelseaMarket-Regular.ttf" id="4_kycxp"]
 [ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scripts/Customer.cs" id="5_jh1ax"]
-[ext_resource type="Script" uid="uid://dnh8ai0nf1p3x" path="res://scripts/Clock.cs" id="5_kycxp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_j287u"]
 font = ExtResource("4_kycxp")
@@ -19,13 +18,13 @@ centered = false
 script = ExtResource("1_sqa0i")
 
 [node name="Counter" parent="Casino" unique_id=821975482 instance=ExtResource("3_kycxp")]
-position = Vector2(156, 170)
+position = Vector2(152, 170)
 
 [node name="Counter2" parent="Casino" unique_id=1685303288 instance=ExtResource("3_kycxp")]
-position = Vector2(157, 346)
+position = Vector2(152, 360)
 
 [node name="Counter3" parent="Casino" unique_id=197329088 instance=ExtResource("3_kycxp")]
-position = Vector2(157, 514)
+position = Vector2(152, 552)
 
 [node name="TimeElapsed" type="Label" parent="Casino" unique_id=1414370657]
 offset_left = 1058.0
@@ -33,9 +32,6 @@ offset_right = 1269.0
 offset_bottom = 67.0
 text = "00:00:00"
 label_settings = SubResource("LabelSettings_j287u")
-
-[node name="Clock" type="Node" parent="Casino" unique_id=1414021763]
-script = ExtResource("5_kycxp")
 
 [node name="Customer" type="Node" parent="." unique_id=192974613]
 script = ExtResource("5_jh1ax")

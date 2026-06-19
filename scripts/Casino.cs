@@ -10,21 +10,18 @@ public partial class Casino : Sprite2D
 
 	public float Reputation; // 1-10 / 5 star system
 
-	private Clock clock;
-
 	public int MaxNumberMachines; // how many machines you can have at once
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		clock = (Clock)GetNode<Node>("Clock");
-		clock.RestartClock();
+		Clock.Instance.RestartClock();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		GetNode<Label>("TimeElapsed").Text = clock.PlayTimeAsString();
+		GetNode<Label>("TimeElapsed").Text = Clock.Instance.PlayTimeAsString();
 	}
 	
 	public override void _Input(InputEvent @event)
@@ -32,9 +29,9 @@ public partial class Casino : Sprite2D
 		// pause and unpause the clock wow
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
 			if (keyEvent.Keycode == Key.Space)
-				if (clock.IsPaused)
-					clock.ResumeClock();
+				if (Clock.Instance.IsPaused)
+					Clock.Instance.ResumeClock();
 				else
-					clock.PauseClock();
+					Clock.Instance.PauseClock();
 	}
 }
