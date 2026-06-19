@@ -3,34 +3,28 @@
 [ext_resource type="Script" uid="uid://b4c0omwk6rcl3" path="res://scripts/Casino.cs" id="1_sqa0i"]
 [ext_resource type="Texture2D" uid="uid://cbatepgd76rlr" path="res://textures/casino.png" id="2_kycxp"]
 [ext_resource type="PackedScene" uid="uid://e7j1o2hw8r5m" path="res://scenes/counter.tscn" id="3_kycxp"]
-[ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="4_j287u"]
 [ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scripts/Customer.cs" id="5_jh1ax"]
 [ext_resource type="Script" uid="uid://dnh8ai0nf1p3x" path="res://scripts/Clock.cs" id="5_kycxp"]
 
 [node name="GameRootProbably" type="Node2D" unique_id=432179694]
 
-[node name="Casino" type="Node" parent="." unique_id=551408869]
-script = ExtResource("1_sqa0i")
-
-[node name="Casinofloor" type="Sprite2D" parent="Casino" unique_id=207199944]
+[node name="Casino" type="Sprite2D" parent="." unique_id=207199944]
 texture = ExtResource("2_kycxp")
 centered = false
+script = ExtResource("1_sqa0i")
 
-[node name="Counter" parent="Casino/Casinofloor" unique_id=821975482 instance=ExtResource("3_kycxp")]
+[node name="Counter" parent="Casino" unique_id=821975482 instance=ExtResource("3_kycxp")]
 position = Vector2(156, 170)
 
-[node name="Counter2" parent="Casino/Casinofloor" unique_id=1685303288 instance=ExtResource("3_kycxp")]
+[node name="Counter2" parent="Casino" unique_id=1685303288 instance=ExtResource("3_kycxp")]
 position = Vector2(157, 346)
 
-[node name="Counter3" parent="Casino/Casinofloor" unique_id=197329088 instance=ExtResource("3_kycxp")]
+[node name="Counter3" parent="Casino" unique_id=197329088 instance=ExtResource("3_kycxp")]
 position = Vector2(157, 514)
 
 [node name="TimeElapsed" type="Label" parent="Casino" unique_id=1414370657]
 offset_right = 40.0
 offset_bottom = 23.0
-
-[node name="Lotto Machine" type="Node" parent="." unique_id=658435304]
-script = ExtResource("4_j287u")
 
 [node name="Clock" type="Node" parent="." unique_id=1414021763]
 script = ExtResource("5_kycxp")

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d07fdx7l3q780"]
+
+[ext_resource type="PackedScene" uid="uid://udbys7qkc8uw" path="res://scenes/lotto_machine.tscn" id="1_lpjt2"]
+
+[node name="MachineSlot1" type="Node2D" unique_id=365910843]
+
+[node name="Lotto Machine" parent="." unique_id=1331246923 instance=ExtResource("1_lpjt2")]
+position = Vector2(10, 10)

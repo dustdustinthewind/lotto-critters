@@ -1,39 +1,44 @@
 using Godot;
 using System;
 
-public partial class LottoMachine : Node
+public partial class LottoMachine : Node2D
 {
-    public int machineCondition; // Hunger and Wear and Tear and Mood that might affect the working of a machine.
+	public int machineCondition; // Hunger and Wear and Tear and Mood that might affect the working of a machine.
 
-    public int CurrentAge;
+	public int CurrentAge;
 
-    public Payout Payouts;
-    
-    public float Evil; // lol
+	public Payout Payouts;
+	
+	public float Evil; // lol
 
-    public int CostPerPlay; // controllable by player
-    public int TimeToPlay;
+	public int CostPerPlay; // controllable by player
+	public int TimeToPlay;
 
-    public float Attractiveness; // how attractive/addictive this game is compared to others, how much folks wanna play it
-    public float NewMachineAttractivenessBonus; // a "novelty" from a new machine people are more attracted/curious to try it out
-    public float noveltyDrain;
+	public float Attractiveness; // how attractive/addictive this game is compared to others, how much folks wanna play it
+	public float NewMachineAttractivenessBonus; // a "novelty" from a new machine people are more attracted/curious to try it out
+	public float noveltyDrain;
 
-    public LottoMachine(LottoMachine parent1, LottoMachine parent2)
-    {
-        // genetic-swapping here
-        // genes are decided from range of parents
-        // genetic bonuses in most cases
-    }
-        
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-    }
+	public LottoMachine(LottoMachine parent1, LottoMachine parent2)
+	{
+		// genetic-swapping here
+		// genes are decided from range of parents
+		// genetic bonuses in most cases
+	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
-    }
+	public LottoMachine()
+	{
+		// random stats here
+	}
+		
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
 }
 
 public struct Payout
@@ -69,24 +74,24 @@ public struct Payout
 		Jackpot = jackpot; jackpotChance = jackpotPercent;
 	}
 
-    public int RandomPayout(int bet)
-    {
-        // make this globally accessible
-        Random rndObj = new Random();
-        double roll = rndObj.NextDouble();
+	public int RandomPayout(int bet)
+	{
+		// make this globally accessible
+		Random rndObj = new Random();
+		double roll = rndObj.NextDouble();
 
-        // send signal based on winnings?
-        if (roll < jackpotChance)
-            return Jackpot;
-        else if (roll < jackpotChance + largeChance)
-            return LargePayout;
-        else if (roll < jackpotChance + largeChance + mediumChance)
-            return MediumPayout;
-        else if (roll < jackpotChance + largeChance + mediumChance + smallChance)
-            return SmallPayout;
-        else if (roll < jackpotChance + largeChance + mediumChance + smallChance + tinyChance)
-            return TinyPayout;
-        else
-            return 0;
-    }
+		// send signal based on winnings?
+		if (roll < jackpotChance)
+			return Jackpot;
+		else if (roll < jackpotChance + largeChance)
+			return LargePayout;
+		else if (roll < jackpotChance + largeChance + mediumChance)
+			return MediumPayout;
+		else if (roll < jackpotChance + largeChance + mediumChance + smallChance)
+			return SmallPayout;
+		else if (roll < jackpotChance + largeChance + mediumChance + smallChance + tinyChance)
+			return TinyPayout;
+		else
+			return 0;
+	}
 }
