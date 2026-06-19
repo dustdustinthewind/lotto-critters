@@ -16,47 +16,97 @@ public partial class LottoMachine : Node2D
 	
 	public ulong TimeToPlay;
 	private ulong whenDonePlaying;
+	private bool playing = false;
 
-	public float Attractiveness; // how attractive/addictive this game is compared to others, how much folks wanna play it
-	public float NewMachineAttractivenessBonus; // a "novelty" from a new machine people are more attracted/curious to try it out
-	public float noveltyDrain;
+	public int Attractiveness => attractiveness + NewMachineNovelty; // how attractive/addictive this game is compared to others, how much folks wanna play it
+	private int attractiveness;
+	
+	public int NewMachineNovelty
+	{
+		get => newMachineNovelty;
+		set => newMachineNovelty = value < 0 ? 0 : value;
+	}
+	private int newMachineNovelty; // an attractiveness bonus from a new machine people are more attracted/curious to try it out
+	public int noveltyDrain; // how much NewMachineAttractivenessBonus drains per play
+	
+	//debug/testing
+	private Button button;
 
+	// this runs first
+	public LottoMachine()
+	{
+		birthTime = Clock.Instance.PlayTimeElapsed;
+		
+		// attractiveness
+		attractiveness = Global.Random.Next(40, 100); // range 40-100
+		NewMachineNovelty = Global.Random.Next(20, 40); // range 20-40
+		noveltyDrain = 100 / attractiveness * Global.Random.Next(1, 4);
+		
+		// TimeToPlay
+		TimeToPlay = 1000u * (ulong)Global.Random.Next(3, 5); // 10-30 seconds
+	}
+
+	// if constructor chaining this runs second
 	public LottoMachine(LottoMachine parent1, LottoMachine parent2) : this()
 	{
 		// genetic-swapping here
 		// genes are decided from range of parents
 		// genetic bonuses in most cases
 	}
-
-	public LottoMachine()
-	{
-		birthTime = Clock.Instance.PlayTimeElapsed;
-		// random stats here
-	}
 	
 	[Signal]
 	public delegate void PlayGameEventHandler(int cost);
 		
+	private Sprite2D machineSprite;	
+		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		button = GetNode<Button>("Button");
+		
 		// this should be handled by casino not global shenanigans?
 		//PlayGame += Casino.Instance.OnPlayGameSignal;
 		
 		// get button signal
-		GetNode<Button>("Button").Pressed += PlayLottoGame;
+		button.Pressed += PlayLottoGame;
+		
+		machineSprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (playing && Clock.Instance.PlayTimeElapsed > whenDonePlaying)
+		{
+			playing = false;
+			DoAPayout();
+		}
 	}
+	
+	private PackedScene moneyNotif = (PackedScene)GD.Load("res://scenes/money_notification.tscn");	
 	
 	// start playing, put money in towards casino total money
 	public void PlayLottoGame()
 	{
+		button.Disabled = true;
+		
 		EmitSignal(SignalName.PlayGame, CostPerPlay);
+		
+		MoneyNotification money = (MoneyNotification)moneyNotif.Instantiate();
+		AddChild(money);
+		money.Money = CostPerPlay;
+		
 		// start timer
+		playing = true;
+		whenDonePlaying = Clock.Instance.PlayTimeElapsed + TimeToPlay;
+		machineSprite.Modulate = new Color(0.4f, 0.4f, 0.4f);
+	}
+	
+	public void DoAPayout()
+	{
+		button.Disabled = false;
+		machineSprite.Modulate = new Color(1, 1, 1);
+		// figure out payout to customer that just played
 	}
 }
 
@@ -95,9 +145,7 @@ public struct Payout
 
 	public int RandomPayout(int bet)
 	{
-		// make this globally accessible
-		Random rndObj = new Random();
-		double roll = rndObj.NextDouble();
+		double roll = Global.Random.NextDouble();
 
 		// send signal based on winnings?
 		if (roll < jackpotChance)
