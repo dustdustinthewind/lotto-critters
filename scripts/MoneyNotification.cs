@@ -17,6 +17,8 @@ public partial class MoneyNotification : Label
 	private Color positiveColor => new Color(0, 176f/255f, 6f/255f, currentTransparency);
 	private Color negativeColor => new Color(176f/255f, 0, 6f/255f, currentTransparency);
 	private Color currentColor;
+	
+	private LabelSettings labelSettings = new LabelSettings();
 
 	public int Money
 	{
@@ -25,7 +27,7 @@ public partial class MoneyNotification : Label
 		{
 			money = value;
 			currentColor = money > 0 ? positiveColor : negativeColor;
-			Text = "$" + money;
+			Text = "$" + Math.Abs(money);
 		}
 	}
 	private int money = 0;
@@ -33,8 +35,13 @@ public partial class MoneyNotification : Label
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		SetLabelSettings(labelSettings);
+		
 		fontGainDrain = fontGain;
-		GetLabelSettings().FontSize = (int)currentFontSize;
+		labelSettings.FontSize = (int)currentFontSize;
+		
+		labelSettings.SetFont((Font)GD.Load<Font>("res://fonts/ChelseaMarket-Regular.ttf"));
+		
 		Position -= new Vector2(-65, 40); // this sucks
 	}
 
@@ -65,7 +72,7 @@ public partial class MoneyNotification : Label
 		
 		if (currentFontSize <= 2 || currentTransparency <= 0.01f)
 		{
-			GD.Print("Change da world: my final message. Goodbye.");
+			//GD.Print("Change da world: my final message. Goodbye.");
 			this.QueueFree();
 		}
 	}

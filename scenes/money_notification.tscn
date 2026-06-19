@@ -1,10 +1,6 @@
 [gd_scene format=3 uid="uid://bufrer78mwyw5"]
 
-[ext_resource type="FontFile" uid="uid://d0qbm3fjk3go" path="res://fonts/ChelseaMarket-Regular.ttf" id="1_1d4fg"]
-[ext_resource type="Script" uid="uid://bjws5xdni4bc5" path="res://MoneyNotification.cs" id="1_kmu85"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_bhqwm"]
-font = ExtResource("1_1d4fg")
+[ext_resource type="Script" uid="uid://bjws5xdni4bc5" path="res://scripts/MoneyNotification.cs" id="1_kmu85"]
 
 [node name="MoneyNotification" type="Label" unique_id=1597683694]
 anchors_preset = 15
@@ -13,7 +9,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "$"
-label_settings = SubResource("LabelSettings_bhqwm")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_kmu85")
