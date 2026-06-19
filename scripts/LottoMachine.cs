@@ -53,7 +53,7 @@ public partial class LottoMachine : Node2D
 		// CostPerPlay
 		double lowMedOrHigh = Global.Random.NextDouble();
 		CostPerPlay =
-			lowMedOrHigh < 0.6 ? Global.Random.Next(1,5)     :
+			lowMedOrHigh < 0.6 ? Global.Random.Next(5,10)    :
 			lowMedOrHigh < 0.9 ? Global.Random.Next(25, 50)  :
 								 Global.Random.Next(100, 500);
 		// roll evil cost

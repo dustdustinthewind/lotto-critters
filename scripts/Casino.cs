@@ -10,7 +10,7 @@ public partial class Casino : Sprite2D
 
 	public float Reputation; // 1-10 / 5 star system
 
-	private int maxNumberMachines = 1; // how many machines you can have at once
+	private int maxNumberMachines = 16; // how many machines you can have at once
 	private int MaxNumberMachines
 	{
 		get => maxNumberMachines;

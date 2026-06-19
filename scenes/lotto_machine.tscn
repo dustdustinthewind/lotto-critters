@@ -2,15 +2,21 @@
 
 [ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="1_02tc8"]
 [ext_resource type="Texture2D" uid="uid://bxfr2v6bco6ig" path="res://textures/test machine scaled.png" id="2_yh7s0"]
+[ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scenes/CustomerTravelRegion.cs" id="3_nqvff"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yh7s0"]
+size = Vector2(76, 48)
 
 [node name="Lotto Machine" type="Node2D" unique_id=1840890237]
 script = ExtResource("1_02tc8")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=795088604]
 custom_minimum_size = Vector2(130, 80)
-offset_right = 80.0
-offset_bottom = 80.0
+offset_right = 130.0
+offset_bottom = 99.0
 border_width = 3.0
+editor_only = false
+metadata/_edit_lock_ = true
 
 [node name="Button" type="Button" parent="." unique_id=1827952168]
 offset_top = -67.0
@@ -18,9 +24,29 @@ offset_right = 128.0
 offset_bottom = 78.0
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 flat = true
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1710473674]
 position = Vector2(9, -67)
 scale = Vector2(0.36963695, 0.3696368)
 texture = ExtResource("2_yh7s0")
 centered = false
+metadata/_edit_lock_ = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1190347567]
+
+[node name="CustomerTravelRegion" type="CollisionShape2D" parent="Area2D" unique_id=1073099905]
+z_index = 10
+position = Vector2(65, 126)
+shape = SubResource("RectangleShape2D_yh7s0")
+script = ExtResource("3_nqvff")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Area2D/CustomerTravelRegion" unique_id=1690077837]
+offset_left = -38.0
+offset_top = -24.0
+offset_right = 38.0
+offset_bottom = 23.5
+border_color = Color(0, 0.6, 0.69803923, 1)
+border_width = 3.0
+editor_only = false
+metadata/_edit_lock_ = true

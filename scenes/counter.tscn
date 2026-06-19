@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://e7j1o2hw8r5m"]
 
 [ext_resource type="Script" uid="uid://cio730pfyhrg6" path="res://scripts/Counter.cs" id="1_wcxvy"]
+[ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scenes/CustomerTravelRegion.cs" id="2_8e5hq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sc7mx"]
+size = Vector2(97, 73.5)
 
 [node name="Counter" type="Node2D" unique_id=1685303288]
 script = ExtResource("1_wcxvy")
@@ -31,3 +35,20 @@ offset_left = 465.0
 offset_right = 595.0
 offset_bottom = 100.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1486039467]
+
+[node name="CustomerTravelRegion" type="CollisionShape2D" parent="Area2D" unique_id=101723256]
+position = Vector2(721.5, 142.25)
+shape = SubResource("RectangleShape2D_sc7mx")
+script = ExtResource("2_8e5hq")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Area2D/CustomerTravelRegion" unique_id=492781799]
+offset_left = -48.5
+offset_top = -36.25
+offset_right = 48.5
+offset_bottom = 36.75
+border_color = Color(0, 0.6, 0.69803923, 1)
+border_width = 3.0
+editor_only = false
+metadata/_edit_lock_ = true
