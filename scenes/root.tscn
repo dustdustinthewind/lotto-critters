@@ -22,14 +22,14 @@ texture = ExtResource("2_kycxp")
 centered = false
 script = ExtResource("1_sqa0i")
 
-[node name="Counter" parent="Casino" unique_id=821975482 instance=ExtResource("3_kycxp")]
-position = Vector2(152, 170)
+[node name="Counter0" parent="Casino" unique_id=821975482 instance=ExtResource("3_kycxp")]
+position = Vector2(256, 162)
 
-[node name="Counter2" parent="Casino" unique_id=1685303288 instance=ExtResource("3_kycxp")]
-position = Vector2(152, 360)
+[node name="Counter1" parent="Casino" unique_id=1685303288 instance=ExtResource("3_kycxp")]
+position = Vector2(256, 360)
 
-[node name="Counter3" parent="Casino" unique_id=197329088 instance=ExtResource("3_kycxp")]
-position = Vector2(152, 552)
+[node name="Counter2" parent="Casino" unique_id=197329088 instance=ExtResource("3_kycxp")]
+position = Vector2(256, 560)
 
 [node name="TimeElapsed" type="Label" parent="Casino" unique_id=1414370657]
 offset_left = 1120.0

@@ -41,7 +41,10 @@ public partial class LottoMachine : Node2D
 	public override void _Ready()
 	{
 		// this should be handled by casino not global shenanigans?
-		PlayGame += Casino.Instance.OnPlayGameSignal;
+		//PlayGame += Casino.Instance.OnPlayGameSignal;
+		
+		// get button signal
+		GetNode<Button>("Button").Pressed += PlayLottoGame;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -54,19 +57,6 @@ public partial class LottoMachine : Node2D
 	{
 		EmitSignal(SignalName.PlayGame, CostPerPlay);
 		// start timer
-	}
-	
-	public override void _Input(InputEvent @event)
-	{
-		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
-		{
-			switch (keyEvent.Keycode)
-			{
-				case Key.Key1:
-					PlayLottoGame();
-					break;
-			}
-		}
 	}
 }
 

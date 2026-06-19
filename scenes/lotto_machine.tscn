@@ -7,13 +7,20 @@
 script = ExtResource("1_02tc8")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=795088604]
-custom_minimum_size = Vector2(110, 80)
+custom_minimum_size = Vector2(130, 80)
 offset_right = 80.0
 offset_bottom = 80.0
 border_width = 3.0
 
+[node name="Button" type="Button" parent="." unique_id=1827952168]
+offset_top = -67.0
+offset_right = 128.0
+offset_bottom = 78.0
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+flat = true
+
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1710473674]
-position = Vector2(0, -84.848175)
-scale = Vector2(0.35973597, 0.35973588)
+position = Vector2(9, -67)
+scale = Vector2(0.36963695, 0.3696368)
 texture = ExtResource("2_yh7s0")
 centered = false
