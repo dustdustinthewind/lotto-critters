@@ -18,6 +18,7 @@ public partial class Casino : Sprite2D
 	public override void _Ready()
 	{
 		Clock.Instance.RestartClock();
+		Clock.Instance.TickTock += OnSecondPassed;
 		Instance = this;
 		PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
 		GetNode<Counter>("Counter").AddMachine((LottoMachine)testMachine.Instantiate());
@@ -29,11 +30,16 @@ public partial class Casino : Sprite2D
 		Money += costPerPlay;
 		GetNode<Label>("Money").Text = string.Format("${0}", Money);
 	}
+	
+	// called every gameplay second passed
+	private void OnSecondPassed()
+	{
+		GetNode<Label>("TimeElapsed").Text = Clock.Instance.PlayTimeAsString();
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		GetNode<Label>("TimeElapsed").Text = Clock.Instance.PlayTimeAsString();
 	}
 	
 	public override void _Input(InputEvent @event)

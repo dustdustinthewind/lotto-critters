@@ -20,6 +20,8 @@ public partial class Clock : Node
 	{
 		get => PlayTimeElapsed / 1000;
 	}
+	
+	private ulong lastFullSecond = 0;
 
 	private bool paused = true;
 
@@ -63,5 +65,18 @@ public partial class Clock : Node
 	public override void _Ready()
 	{
 		Instance = this;
+	}
+	
+	// emits every time a signal has passed
+	[Signal]
+	public delegate void TickTockEventHandler();
+	
+	public override void _Process(double delta)
+	{
+		if (PlayTimeElapsedInSeconds > lastFullSecond)
+		{
+			lastFullSecond = PlayTimeElapsedInSeconds;
+			EmitSignal(SignalName.TickTock);
+		}
 	}
 }
