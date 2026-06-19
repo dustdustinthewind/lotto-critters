@@ -5,20 +5,23 @@ public partial class LottoMachine : Node2D
 {
 	public int machineCondition; // Hunger and Wear and Tear and Mood that might affect the working of a machine.
 
-	public int CurrentAge;
+	public ulong CurrentAge => Clock.Instance.PlayTimeElapsed - birthTime;
+	private ulong birthTime;
 
 	public Payout Payouts;
 	
 	public float Evil; // kinda of a compliance/event-important variable
 
-	public int CostPerPlay; // controllable by player
-	public int TimeToPlay;
+	public int CostPerPlay = 69; // controllable by player
+	
+	public ulong TimeToPlay;
+	private ulong whenDonePlaying;
 
 	public float Attractiveness; // how attractive/addictive this game is compared to others, how much folks wanna play it
 	public float NewMachineAttractivenessBonus; // a "novelty" from a new machine people are more attracted/curious to try it out
 	public float noveltyDrain;
 
-	public LottoMachine(LottoMachine parent1, LottoMachine parent2)
+	public LottoMachine(LottoMachine parent1, LottoMachine parent2) : this()
 	{
 		// genetic-swapping here
 		// genes are decided from range of parents
@@ -27,17 +30,43 @@ public partial class LottoMachine : Node2D
 
 	public LottoMachine()
 	{
+		birthTime = Clock.Instance.PlayTimeElapsed;
 		// random stats here
 	}
+	
+	[Signal]
+	public delegate void PlayGameEventHandler(int cost);
 		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// this should be handled by casino not global shenanigans?
+		PlayGame += Casino.Instance.OnPlayGameSignal;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+	
+	// start playing, put money in towards casino total money
+	public void PlayLottoGame()
+	{
+		EmitSignal(SignalName.PlayGame, CostPerPlay);
+		// start timer
+	}
+	
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+		{
+			switch (keyEvent.Keycode)
+			{
+				case Key.Key1:
+					PlayLottoGame();
+					break;
+			}
+		}
 	}
 }
 

@@ -1,13 +1,19 @@
 [gd_scene format=3 uid="uid://udbys7qkc8uw"]
 
 [ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="1_02tc8"]
+[ext_resource type="Texture2D" uid="uid://bxfr2v6bco6ig" path="res://textures/test machine scaled.png" id="2_yh7s0"]
 
 [node name="Lotto Machine" type="Node2D" unique_id=1840890237]
 script = ExtResource("1_02tc8")
 
 [node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=795088604]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(110, 80)
 offset_right = 80.0
 offset_bottom = 80.0
 border_width = 3.0
-editor_only = false
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1710473674]
+position = Vector2(0, -84.848175)
+scale = Vector2(0.35973597, 0.35973588)
+texture = ExtResource("2_yh7s0")
+centered = false

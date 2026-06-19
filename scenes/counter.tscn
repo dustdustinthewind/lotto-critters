@@ -10,13 +10,13 @@ color = Color(0.52, 0.2236, 0.052000012, 1)
 polygon = PackedVector2Array(0, 0, 720, 0, 720, 100, 0, 100)
 
 [node name="MachineSlot0" type="Node2D" parent="." unique_id=1923172566]
-position = Vector2(10, 10)
+position = Vector2(30, 10)
 
 [node name="MachineSlot1" type="Node2D" parent="." unique_id=1944145929]
-position = Vector2(125, 10)
+position = Vector2(175, 10)
 
 [node name="MachineSlot2" type="Node2D" parent="." unique_id=1689941670]
-position = Vector2(240, 10)
+position = Vector2(330, 10)
 
 [node name="MachineSlot3" type="Node2D" parent="." unique_id=32683258]
-position = Vector2(355, 10)
+position = Vector2(475, 10)

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public partial class Casino : Sprite2D
 {
-	public int Money; // how much money we gots
+	public static Casino Instance { get; private set; }
+	
+	public int Money = 0; // how much money we gots
 	public List<int> historicalMoney; // Keeps track of money over time
 	public int Taxes; // Daily property taxes that drain your resources
 
@@ -16,6 +18,16 @@ public partial class Casino : Sprite2D
 	public override void _Ready()
 	{
 		Clock.Instance.RestartClock();
+		Instance = this;
+		PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
+		GetNode<Counter>("Counter").AddMachine((LottoMachine)testMachine.Instantiate());
+	}
+	
+	// this shoulda been private?
+	public void OnPlayGameSignal(int costPerPlay)
+	{
+		Money += costPerPlay;
+		GetNode<Label>("Money").Text = string.Format("${0}", Money);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

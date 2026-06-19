@@ -6,9 +6,14 @@
 [ext_resource type="FontFile" uid="uid://d0qbm3fjk3go" path="res://fonts/ChelseaMarket-Regular.ttf" id="4_kycxp"]
 [ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scripts/Customer.cs" id="5_jh1ax"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_jh1ax"]
+font = ExtResource("4_kycxp")
+font_size = 36
+
 [sub_resource type="LabelSettings" id="LabelSettings_j287u"]
 font = ExtResource("4_kycxp")
 font_size = 52
+font_color = Color(0, 0.69, 0.022999978, 1)
 
 [node name="GameRootProbably" type="Node2D" unique_id=432179694]
 
@@ -27,11 +32,20 @@ position = Vector2(152, 360)
 position = Vector2(152, 552)
 
 [node name="TimeElapsed" type="Label" parent="Casino" unique_id=1414370657]
-offset_left = 1058.0
+offset_left = 1120.0
 offset_right = 1269.0
-offset_bottom = 67.0
+offset_bottom = 47.0
 text = "00:00:00"
+label_settings = SubResource("LabelSettings_jh1ax")
+horizontal_alignment = 2
+
+[node name="Money" type="Label" parent="Casino" unique_id=1005791807]
+offset_top = 40.0
+offset_right = 1267.0
+offset_bottom = 107.0
+text = "$0"
 label_settings = SubResource("LabelSettings_j287u")
+horizontal_alignment = 2
 
 [node name="Customer" type="Node" parent="." unique_id=192974613]
 script = ExtResource("5_jh1ax")
