@@ -48,6 +48,8 @@ public partial class Casino : Sprite2D
 		Clock.Instance.TickTock += OnSecondPassed;
 		timeCounter = GetNode<Label>("TimeElapsed");
 		
+		moneyLabel = GetNode<Label>("Money");
+		
 		PrepCountersAndButtons();
 	}
 	
@@ -106,11 +108,20 @@ public partial class Casino : Sprite2D
 			c.EnableButtons();
 	}
 	
+	private Label moneyLabel;
+	
 	// this shoulda been private?
 	public void OnPlayGameSignal(int costPerPlay)
 	{
 		Money += costPerPlay;
-		GetNode<Label>("Money").Text = string.Format("${0}", Money);
+		moneyLabel.Text = "$" + Math.Abs(Money);
+		if (Money < 0)
+		{
+			moneyLabel.Text = "-" + moneyLabel.Text;
+			moneyLabel.GetLabelSettings().SetFontColor(new Color(176f/255f, 0, 6f/255f));
+		}
+		else
+			moneyLabel.GetLabelSettings().SetFontColor(new Color(0, 176f/255f, 6f/255f));
 	}
 	
 	// called every gameplay second passed

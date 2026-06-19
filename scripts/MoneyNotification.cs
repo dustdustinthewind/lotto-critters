@@ -28,6 +28,8 @@ public partial class MoneyNotification : Label
 			money = value;
 			currentColor = money > 0 ? positiveColor : negativeColor;
 			Text = "$" + Math.Abs(money);
+			if (money < 0)
+				Text = "-" + Text;
 		}
 	}
 	private int money = 0;
