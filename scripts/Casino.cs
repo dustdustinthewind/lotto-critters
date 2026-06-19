@@ -10,7 +10,29 @@ public partial class Casino : Sprite2D
 
 	public float Reputation; // 1-10 / 5 star system
 
-	public int MaxNumberMachines; // how many machines you can have at once
+	private int maxNumberMachines = 1; // how many machines you can have at once
+	private int MaxNumberMachines
+	{
+		get => maxNumberMachines;
+		set
+		{
+			maxNumberMachines = value;
+			if (currentNumberMachines < maxNumberMachines)
+				EnableMachineSlots();
+		}
+	}
+	
+	private int currentNumberMachines = 0;
+	private int CurrentNumberMachines
+	{
+		get => currentNumberMachines;
+		set
+		{
+			currentNumberMachines = value;
+			if (currentNumberMachines < maxNumberMachines)
+				EnableMachineSlots();
+		}
+	}
 	
 	private Label timeCounter;
 	
@@ -26,10 +48,10 @@ public partial class Casino : Sprite2D
 		Clock.Instance.TickTock += OnSecondPassed;
 		timeCounter = GetNode<Label>("TimeElapsed");
 		
-		checkCountersAndButtons();
+		PrepCountersAndButtons();
 	}
 	
-	private void checkCountersAndButtons()
+	private void PrepCountersAndButtons()
 	{
 		for (int i = 0; i < counters.Length; i++)
 		{
@@ -48,8 +70,15 @@ public partial class Casino : Sprite2D
 	// counter = which counter
 	// slot = which slot on counter
 	public bool AddMachine(LottoMachine machine, int counter, int slot)
-	{ 
+	{		
 		GD.Print("attempting to add machine, " + counter + " " + slot);
+				
+		if (currentNumberMachines >= maxNumberMachines)
+		{
+			GD.Print("Too many machines in the casino!");
+			return false;
+		}
+		
 		bool success = counters[counter].AddMachine(machine, slot);
 		machine.PlayGame += OnPlayGameSignal;
 
@@ -57,8 +86,24 @@ public partial class Casino : Sprite2D
 			GD.Print("failed to add machine AAAAAAA");
 			
 		GD.Print("machine added successfully");
+		
+		currentNumberMachines++;
+		if (currentNumberMachines >= maxNumberMachines)
+			DisableMachineSlots();
 
 		return success;
+	}
+	
+	private void DisableMachineSlots()
+	{
+		foreach (Counter c in counters)
+			c.DisableButtons();
+	}
+	
+	private void EnableMachineSlots()
+	{
+		foreach (Counter c in counters)
+			c.EnableButtons();
 	}
 	
 	// this shoulda been private?
@@ -88,5 +133,7 @@ public partial class Casino : Sprite2D
 					Clock.Instance.ResumeClock();
 				else
 					Clock.Instance.PauseClock();
+			else if (keyEvent.Keycode == Key.Key1)
+				MaxNumberMachines++;
 	}
 }

@@ -27,12 +27,32 @@ public partial class Counter : Node2D
 			Machines[i] = machine;
 			Buttons[i].AddChild(Machines[i]);
 			Buttons[i].Disabled = true;
+			Buttons[i].Flat = true;
 			return true;
 		}
 
 		// todo make signal?
 		GD.Print("SLOT IS FULL, TRY ADDING SOMEWHERE ELSE");
 		return false;
+	}
+
+	public void EnableButtons()
+	{
+		for (int i = 0; i < Machines.Length; i++)
+			if (Machines[i] == null)
+			{
+				Buttons[i].Disabled = false;
+				Buttons[i].Flat = false;
+			}
+	}
+
+	public void DisableButtons()
+	{
+		foreach (Button b in Buttons)
+		{
+			b.Disabled = true;
+			b.Flat = true;
+		}
 	}
 	
 	public LottoMachine RemoveMachine(int index)
