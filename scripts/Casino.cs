@@ -50,8 +50,12 @@ public partial class Casino : Sprite2D
 		
 		moneyLabel = GetNode<Label>("Money");
 		
+		customer = (Customer)GetNode<Node2D>("Customer");
 		PrepCountersAndButtons();
 	}
+	
+	//debug/testing
+	private Customer customer;
 	
 	private void PrepCountersAndButtons()
 	{
@@ -88,6 +92,9 @@ public partial class Casino : Sprite2D
 			GD.Print("failed to add machine AAAAAAA");
 			
 		GD.Print("machine added successfully");
+		
+		if (!customer.IsWalking)
+			customer.ChooseMachineToWalkTo(counters[counter], counters[counter].Machines[slot]);
 		
 		currentNumberMachines++;
 		if (currentNumberMachines >= maxNumberMachines)

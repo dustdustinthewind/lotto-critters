@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://e7j1o2hw8r5m"]
 
 [ext_resource type="Script" uid="uid://cio730pfyhrg6" path="res://scripts/Counter.cs" id="1_wcxvy"]
-[ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scenes/CustomerTravelRegion.cs" id="2_8e5hq"]
+[ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scripts/CustomerTravelRegion.cs" id="2_8e5hq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sc7mx"]
 size = Vector2(97, 73.5)

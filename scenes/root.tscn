@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cbatepgd76rlr" path="res://textures/casino.png" id="2_kycxp"]
 [ext_resource type="PackedScene" uid="uid://e7j1o2hw8r5m" path="res://scenes/counter.tscn" id="3_kycxp"]
 [ext_resource type="FontFile" uid="uid://d0qbm3fjk3go" path="res://fonts/ChelseaMarket-Regular.ttf" id="4_kycxp"]
-[ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scripts/Customer.cs" id="5_jh1ax"]
+[ext_resource type="PackedScene" uid="uid://q5oku1k4fltv" path="res://scenes/customer.tscn" id="5_jh1ax"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jh1ax"]
 font = ExtResource("4_kycxp")
@@ -47,5 +47,5 @@ text = "$0"
 label_settings = SubResource("LabelSettings_j287u")
 horizontal_alignment = 2
 
-[node name="Customer" type="Node" parent="." unique_id=192974613]
-script = ExtResource("5_jh1ax")
+[node name="Customer" parent="Casino" unique_id=433102505 instance=ExtResource("5_jh1ax")]
+position = Vector2(978, 856)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="1_02tc8"]
 [ext_resource type="Texture2D" uid="uid://bxfr2v6bco6ig" path="res://textures/test machine scaled.png" id="2_yh7s0"]
-[ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scenes/CustomerTravelRegion.cs" id="3_nqvff"]
+[ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scripts/CustomerTravelRegion.cs" id="3_nqvff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yh7s0"]
 size = Vector2(76, 48)

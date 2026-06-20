@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Customer : Node
+public partial class Customer : Node2D
 {
 	public int Stubborness;
 	
@@ -9,9 +9,62 @@ public partial class Customer : Node
 	public override void _Ready()
 	{
 	}
+	
+	private float speed = 100 ;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		float amountToWalk = speed * (float)delta;
+		
+		// this code sucks
+		if (!firstDestinationReached)
+		{
+			SetPosition(GetPosition().MoveToward(firstDestination, amountToWalk));
+			firstDestinationReached = GetPosition() == firstDestination;
+		}
+		else if (!secondDestinationReached)
+		{
+			SetPosition(GetPosition().MoveToward(secondDestination, amountToWalk));
+			secondDestinationReached = GetPosition() == secondDestination;
+		}
+		else if (!finalDestinationReached)
+		{
+			SetPosition(GetPosition().MoveToward(finalDestination, amountToWalk));
+			finalDestinationReached = GetPosition() == finalDestination;
+		}
+	}
+	
+	private Vector2 firstDestination;
+	private bool firstDestinationReached = false;
+	private Vector2 secondDestination;
+	private bool secondDestinationReached = false;
+	private Vector2 finalDestination;
+	private bool finalDestinationReached = false;
+	
+	public bool IsWalking => !firstDestinationReached || !secondDestinationReached || !finalDestinationReached;
+	
+	private const string PATH_TRAVEL_REGION = "Area2D/CustomerTravelRegion";
+	public void ChooseMachineToWalkTo(Counter counter, LottoMachine machine)
+	{
+		finalDestination = ((CustomerTravelRegion)machine.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
+		finalDestinationReached = false;
+		
+		// first see if the machine is on the same row we're already on
+		if (Math.Abs(finalDestination.Y - Position.Y) < 150)
+		{
+			firstDestinationReached = true;
+			secondDestinationReached = true;
+			return;	
+		}
+		// if not, set first destination to the right and second destination to the counter
+		else
+		{
+			firstDestinationReached = false;
+			firstDestination = ((CustomerTravelRegion)machine.GetNode<CollisionShape2D>("../"+PATH_TRAVEL_REGION)).GetRandomPoint();
+			
+			secondDestination = counter.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION).Position;
+			secondDestinationReached = false;
+		}
 	}
 }

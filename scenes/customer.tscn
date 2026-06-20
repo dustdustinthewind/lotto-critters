@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://q5oku1k4fltv"]
+
+[ext_resource type="Script" uid="uid://cajkp16tjowvl" path="res://scripts/Customer.cs" id="1_ktfjk"]
+[ext_resource type="Texture2D" uid="uid://i34giwaju0dc" path="res://textures/test person small.png" id="2_xss0h"]
+
+[node name="Customer" type="Node2D" unique_id=433102505]
+script = ExtResource("1_ktfjk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=390145258]
+scale = Vector2(0.36866364, 0.3686636)
+texture = ExtResource("2_xss0h")
+offset = Vector2(0, -108.5)
