@@ -18,7 +18,7 @@ public partial class CustomerTravelRegion : CollisionShape2D
 	
 	public override void _Draw()
 	{
-		DrawCircle(randomPoint - Position, 5, new Color(0, 1, 1));
+		DrawCircle(randomPoint - GlobalPosition, 5, new Color(0, 1, 1));
 	}
 	
 	private int buffer = 25;
@@ -28,8 +28,8 @@ public partial class CustomerTravelRegion : CollisionShape2D
 		float width =  ((RectangleShape2D)Shape).Size.X - buffer;
 		float height = ((RectangleShape2D)Shape).Size.Y - buffer;
 		GD.Print(width + "," + height);
-		float x = Position.X + Global.Random.Next(0, (int)width) - (int)width/2;
-		float y = Position.Y + Global.Random.Next(0, (int)height) - (int)height/2;
+		float x = GlobalPosition.X + Global.Random.Next(0, (int)width) - (int)width/2;
+		float y = GlobalPosition.Y + Global.Random.Next(0, (int)height) - (int)height/2;
 		GD.Print(x + "," + y);
 		return new Vector2(x, y);
 	}

@@ -10,14 +10,15 @@ public partial class Customer : Node2D
 	{
 	}
 	
-	private float speed = 100 ;
+	private float speed = 100;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		float amountToWalk = speed * (float)delta;
 		
-		// this code sucks
+		GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
+		
 		if (!firstDestinationReached)
 		{
 			SetPosition(GetPosition().MoveToward(firstDestination, amountToWalk));
@@ -36,11 +37,13 @@ public partial class Customer : Node2D
 	}
 	
 	private Vector2 firstDestination;
-	private bool firstDestinationReached = false;
+	private bool firstDestinationReached = true;
 	private Vector2 secondDestination;
-	private bool secondDestinationReached = false;
+	private bool secondDestinationReached = true;
 	private Vector2 finalDestination;
-	private bool finalDestinationReached = false;
+	private bool finalDestinationReached = true;
+	
+	private Counter currentCounterAt;
 	
 	public bool IsWalking => !firstDestinationReached || !secondDestinationReached || !finalDestinationReached;
 	
@@ -61,10 +64,16 @@ public partial class Customer : Node2D
 		else
 		{
 			firstDestinationReached = false;
-			firstDestination = ((CustomerTravelRegion)machine.GetNode<CollisionShape2D>("../"+PATH_TRAVEL_REGION)).GetRandomPoint();
+			Counter toGo = currentCounterAt == null ? counter : currentCounterAt;
+			firstDestination = ((CustomerTravelRegion)toGo.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
 			
-			secondDestination = counter.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION).Position;
-			secondDestinationReached = false;
+			if (currentCounterAt != null)
+			{
+				secondDestination = ((CustomerTravelRegion)counter.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
+				secondDestinationReached = false;
+			}
 		}
+		
+		currentCounterAt = counter;
 	}
 }
