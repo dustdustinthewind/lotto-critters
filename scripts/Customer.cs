@@ -55,7 +55,7 @@ public partial class Customer : Node2D
 
 			desiredMachine.PlayLottoGame();
 
-			GD.Print("My Stubborn is" + Stubborness);
+			//GD.Print("My Stubborn is " + Stubborness);
 		}
 
 
@@ -66,7 +66,7 @@ public partial class Customer : Node2D
 	private void OnPlayGameSignal(int payouted)
 	{
 		Stubborness -= payouted;
-		GD.Print("I Feel like" + Stubborness);
+		//GD.Print("I Feel like " + Stubborness);
 
 	}
 

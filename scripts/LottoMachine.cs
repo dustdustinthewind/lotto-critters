@@ -150,15 +150,16 @@ public partial class LottoMachine : Node2D
 	private double randomBetweenTwoDoubles(double val1, double val2)
 	{
 		double min = Math.Min(val1, val2);
-		double max = Math.Min(val1, val2) - min;
+		double max = Math.Max(val1, val2) - min;
 		return min + (Global.Random.NextDouble() * max);
 	}
 
 	public void SetRandomPayouts()
 	{
-		// house chance of winning is 50% to 80%
+		// house chance of winning is 40% to 80%
 		// upgradeable to 90%
-		SetRandomPayouts(randomBetweenTwoDoubles(0.5, 0.8));
+		// evil?
+		SetRandomPayouts(randomBetweenTwoDoubles(0.4, 0.8));
 	}
 
 	public void SetRandomPayouts(
@@ -167,7 +168,7 @@ public partial class LottoMachine : Node2D
 		double tinyChance = 0.5, // 1/2
 		double smallChance = 0.2, // 1/5
 		double mediumChance = 0.15, // 3/20
-		double largeChance =  0.01, // 1/10
+		double largeChance =  0.1, // 1/10
 		double jackpotChance = 0.05 // 0.05 // 1/20
 	)
 	{
@@ -225,6 +226,8 @@ public partial class LottoMachine : Node2D
 		
 		playTimeBar = (ProgressBar)GetNode<Polygon2D>("PlayTimeBar");
 		playTimeBar.SetUpBar(0, TimeToPlay);
+		
+		UpdateStatCard();
 	}
 	
 	private void UpdateStatCard()
@@ -235,6 +238,8 @@ public partial class LottoMachine : Node2D
 		statCard.Evil = Evil;
 		statCard.TimeToPlay = TimeToPlay;
 		statCard.CostToPlay = CostPerPlay;
+		
+		statCard.Payouts = Payouts;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

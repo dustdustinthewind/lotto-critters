@@ -39,6 +39,29 @@ public partial class LottoStatCard : ColorRect
 		set => costLabel.Text = "Cost To Play: $" + value;
 	}
 	
+	private Label tinyChance; private Label tinyPayout;
+	private Label smallChance; private Label smallPayout;
+	private Label mediumChance; private Label mediumPayout;
+	private Label largeChance; private Label largePayout;
+	private Label jackpotChance; private Label jackpotPayout;
+	public Payout Payouts
+	{
+		set
+		{
+			tinyChance.Text = String.Format("{0:P2}", value.tinyChance);
+			tinyPayout.Text = "$" + value.TinyPayout;
+			smallChance.Text = String.Format("{0:P2}", value.smallChance);
+			smallPayout.Text = "$" + value.SmallPayout;
+			mediumChance.Text = String.Format("{0:P2}", value.mediumChance);
+			mediumPayout.Text = "$" + value.MediumPayout;
+			largeChance.Text = String.Format("{0:P2}", value.largeChance);
+			largePayout.Text = "$" + value.LargePayout;
+			jackpotChance.Text = String.Format("{0:P2}", value.jackpotChance);
+			jackpotPayout.Text = "$" + value.Jackpot;
+			
+		}
+	}
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -51,13 +74,22 @@ public partial class LottoStatCard : ColorRect
 		playTimeLabel = GetNode<Label>(statLocation + "TimeToPlay");
 		costLabel = GetNode<Label>(statLocation + "CostToPlay");
 		
+		string payoutLocation = "ColorRect/HBoxContainer/Payout/";
+		tinyChance = GetNode<Label>(payoutLocation + "Tiny/Chance");
+		tinyPayout = GetNode<Label>(payoutLocation + "Tiny/Payout");
+		smallChance = GetNode<Label>(payoutLocation + "Small/Chance");
+		smallPayout = GetNode<Label>(payoutLocation + "Small/Payout");
+		mediumChance = GetNode<Label>(payoutLocation + "Medium/Chance");
+		mediumPayout = GetNode<Label>(payoutLocation + "Medium/Payout");
+		largeChance = GetNode<Label>(payoutLocation + "Large/Chance");
+		largePayout = GetNode<Label>(payoutLocation + "Large/Payout");
+		jackpotChance = GetNode<Label>(payoutLocation + "Jackpot/Chance");
+		jackpotPayout = GetNode<Label>(payoutLocation + "Jackpot/Payout");
+		
 		ZIndex = 99;
 		
 		if (GlobalPosition.Y < 0)
-		{
-			GD.Print("FUCK");
 			Position += new Vector2(0, 300);
-		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
