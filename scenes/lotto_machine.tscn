@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bxfr2v6bco6ig" path="res://textures/test machine scaled.png" id="2_yh7s0"]
 [ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scripts/CustomerTravelRegion.cs" id="3_nqvff"]
 [ext_resource type="Script" uid="uid://cr47tfbqy3odv" path="res://scripts/ProgressBar.cs" id="4_j2odl"]
+[ext_resource type="PackedScene" uid="uid://bnodfnob1idsm" path="res://scenes/stat_card.tscn" id="5_5uuth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yh7s0"]
 size = Vector2(76, 48)
@@ -61,3 +62,9 @@ position = Vector2(0, 88)
 color = Color(0.13725491, 0.42745098, 0.72156864, 1)
 polygon = PackedVector2Array(0, 0, 128, 0, 128, 8, 0, 8)
 script = ExtResource("4_j2odl")
+
+[node name="StatCard" parent="." unique_id=1965681365 instance=ExtResource("5_5uuth")]
+offset_left = -240.0
+offset_top = -260.0
+offset_right = 560.0
+offset_bottom = -60.0

@@ -43,8 +43,6 @@ public partial class LottoMachine : Node2D
 	// this runs first
 	public LottoMachine()
 	{
-		birthTime = Clock.Instance.PlayTimeElapsed;
-
 		// evilness
 		Evil = Global.Random.NextDouble(); // between 0 and 1
 		
@@ -200,11 +198,20 @@ public partial class LottoMachine : Node2D
 	public delegate void PlayGameEventHandler(int cost);
 		
 	private Sprite2D machineSprite;	
+	private LottoStatCard statCard;
 		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		birthTime = Clock.Instance.PlayTimeElapsed;
+		
 		button = GetNode<Button>("Button");
+		
+		statCard = (LottoStatCard)GetNode<ColorRect>("StatCard");
+		statCard.Visible = false;
+		button.MouseEntered += () => statCard.Visible = true;
+		button.MouseExited += () => statCard.Visible = false;
+		Clock.Instance.TickTock += UpdateStatCard;
 		// this should be handled by casino not global shenanigans?
 		//PlayGame += Casino.Instance.OnPlayGameSignal;
 
@@ -218,6 +225,16 @@ public partial class LottoMachine : Node2D
 		
 		playTimeBar = (ProgressBar)GetNode<Polygon2D>("PlayTimeBar");
 		playTimeBar.SetUpBar(0, TimeToPlay);
+	}
+	
+	private void UpdateStatCard()
+	{
+		statCard.Age = CurrentAge;
+		statCard.Attractiveness = Attractiveness;
+		statCard.Condition = machineCondition;
+		statCard.Evil = Evil;
+		statCard.TimeToPlay = TimeToPlay;
+		statCard.CostToPlay = CostPerPlay;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
