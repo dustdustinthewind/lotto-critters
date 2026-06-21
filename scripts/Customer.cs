@@ -37,7 +37,7 @@ public partial class Customer : Node2D
 			finalDestinationReached = GetPosition() == finalDestination;
 		}
 
-		if (finalDestinationReached)
+		if (finalDestinationReached && desiredMachine.playing == false)
 		{
 			desiredMachine.PlayLottoGame();
 		}

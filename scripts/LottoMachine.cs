@@ -16,7 +16,7 @@ public partial class LottoMachine : Node2D
 	
 	public ulong TimeToPlay;
 	private ulong whenDonePlaying;
-	private bool playing = false;
+	public bool playing = false;
 
 	public int Attractiveness => attractiveness + NewMachineNovelty; // how attractive/addictive this game is compared to others, how much folks wanna play it
 	private int attractiveness;
@@ -174,7 +174,6 @@ public partial class LottoMachine : Node2D
 	public override void _Ready()
 	{
 		button = GetNode<Button>("Button");
-		Cooldown = TimeToPlay;
 		// this should be handled by casino not global shenanigans?
 		//PlayGame += Casino.Instance.OnPlayGameSignal;
 		
@@ -195,11 +194,6 @@ public partial class LottoMachine : Node2D
 			DoAPayout();
 		}
 
-		if(Cooldown > 0)
-		{
-			Cooldown -= delta;
-		}
-
 	}
 	
 	private PackedScene moneyNotif = (PackedScene)GD.Load("res://scenes/money_notification.tscn");	
@@ -207,14 +201,6 @@ public partial class LottoMachine : Node2D
 	// start playing, put money in towards casino total money
 	public void PlayLottoGame()
 	{
-
-		if(Cooldown > 0)
-		{
-			return;
-		} else 
-		{
-			Cooldown = TimeToPlay;
-		}
 
 		button.Disabled = true;
 		
