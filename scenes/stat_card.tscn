@@ -1,0 +1,222 @@
+[gd_scene format=3 uid="uid://bnodfnob1idsm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_njyfk"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_k2rl7"]
+font_size = 18
+
+[sub_resource type="LabelSettings" id="LabelSettings_3gpb8"]
+font_size = 14
+
+[node name="StatCard" type="ColorRect" unique_id=1965681365]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -480.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15043807, 0, 0, 0.64705884)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=81951549]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 790.0
+offset_bottom = 190.0
+color = Color(0.6313726, 0.43529412, 0.6627451, 0.3019608)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect" unique_id=920382759]
+layout_mode = 0
+offset_right = 780.0
+offset_bottom = 180.0
+
+[node name="Stats" type="VBoxContainer" parent="ColorRect/HBoxContainer" unique_id=378088268]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="Stats" type="Label" parent="ColorRect/HBoxContainer/Stats" unique_id=658814818]
+layout_mode = 2
+text = "Stats"
+label_settings = SubResource("LabelSettings_njyfk")
+horizontal_alignment = 1
+
+[node name="Age" type="Label" parent="ColorRect/HBoxContainer/Stats" unique_id=1074369073]
+layout_mode = 2
+text = "Age:"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 2
+
+[node name="Condition" type="Label" parent="ColorRect/HBoxContainer/Stats" unique_id=1150233940]
+layout_mode = 2
+text = "Condition:"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 2
+
+[node name="Evil" type="Label" parent="ColorRect/HBoxContainer/Stats" unique_id=539259602]
+layout_mode = 2
+text = "Evil:"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 2
+
+[node name="TimeToPlay" type="Label" parent="ColorRect/HBoxContainer/Stats" unique_id=1667530790]
+layout_mode = 2
+text = "Time To Play:"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 2
+
+[node name="Cost To Play" type="Label" parent="ColorRect/HBoxContainer/Stats" unique_id=508203644]
+layout_mode = 2
+text = "Cost To Play:"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 2
+
+[node name="Margin" type="BoxContainer" parent="ColorRect/HBoxContainer" unique_id=1994637591]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Payout" type="VBoxContainer" parent="ColorRect/HBoxContainer" unique_id=18357797]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Payouts" type="Label" parent="ColorRect/HBoxContainer/Payout" unique_id=1542625841]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Payouts"
+label_settings = SubResource("LabelSettings_njyfk")
+horizontal_alignment = 1
+
+[node name="Labels" type="HBoxContainer" parent="ColorRect/HBoxContainer/Payout" unique_id=2123635040]
+layout_mode = 2
+
+[node name="Chance" type="Label" parent="ColorRect/HBoxContainer/Payout/Labels" unique_id=708645120]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Chance"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 1
+
+[node name="Payout" type="Label" parent="ColorRect/HBoxContainer/Payout/Labels" unique_id=1671274724]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Payout"
+label_settings = SubResource("LabelSettings_k2rl7")
+horizontal_alignment = 2
+
+[node name="Tiny" type="HBoxContainer" parent="ColorRect/HBoxContainer/Payout" unique_id=1273839269]
+layout_mode = 2
+
+[node name="Chance" type="Label" parent="ColorRect/HBoxContainer/Payout/Tiny" unique_id=1515671834]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "tiny"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 1
+
+[node name="Payout" type="Label" parent="ColorRect/HBoxContainer/Payout/Tiny" unique_id=1077736156]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+text = "tiny"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 2
+
+[node name="Small" type="HBoxContainer" parent="ColorRect/HBoxContainer/Payout" unique_id=919873483]
+layout_mode = 2
+
+[node name="Chance" type="Label" parent="ColorRect/HBoxContainer/Payout/Small" unique_id=643424910]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "small"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 1
+
+[node name="Payout" type="Label" parent="ColorRect/HBoxContainer/Payout/Small" unique_id=147511613]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+text = "small"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 2
+
+[node name="Medium" type="HBoxContainer" parent="ColorRect/HBoxContainer/Payout" unique_id=928331885]
+layout_mode = 2
+
+[node name="Chance" type="Label" parent="ColorRect/HBoxContainer/Payout/Medium" unique_id=1560869650]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "medium"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 1
+
+[node name="Payout" type="Label" parent="ColorRect/HBoxContainer/Payout/Medium" unique_id=1556855001]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+text = "medium"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 2
+
+[node name="Large" type="HBoxContainer" parent="ColorRect/HBoxContainer/Payout" unique_id=1932792121]
+layout_mode = 2
+
+[node name="Chance" type="Label" parent="ColorRect/HBoxContainer/Payout/Large" unique_id=1513385820]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "large"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 1
+
+[node name="Payout" type="Label" parent="ColorRect/HBoxContainer/Payout/Large" unique_id=817199181]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+text = "large"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 2
+
+[node name="Jackpot" type="HBoxContainer" parent="ColorRect/HBoxContainer/Payout" unique_id=477264274]
+layout_mode = 2
+
+[node name="Chance" type="Label" parent="ColorRect/HBoxContainer/Payout/Jackpot" unique_id=1568433583]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "jackpot"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 1
+
+[node name="Payout" type="Label" parent="ColorRect/HBoxContainer/Payout/Jackpot" unique_id=1103980370]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+text = "jackpot"
+label_settings = SubResource("LabelSettings_3gpb8")
+horizontal_alignment = 2
+
+[node name="Margin2" type="BoxContainer" parent="ColorRect/HBoxContainer" unique_id=363915497]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect/HBoxContainer/Margin2" unique_id=1443725679]
+layout_mode = 2
+
+[node name="Upgrades" type="VBoxContainer" parent="ColorRect/HBoxContainer" unique_id=846231929]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+
+[node name="Label" type="Label" parent="ColorRect/HBoxContainer/Upgrades" unique_id=1002390779]
+layout_mode = 2
+text = "Upgrades"
+label_settings = SubResource("LabelSettings_njyfk")
+horizontal_alignment = 1
