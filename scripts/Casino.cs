@@ -118,7 +118,7 @@ public partial class Casino : Sprite2D
 	private Label moneyLabel;
 	
 	// this shoulda been private?
-	public void OnPlayGameSignal(int costPerPlay)
+	private void OnPlayGameSignal(int costPerPlay)
 	{
 		Money += costPerPlay;
 		moneyLabel.Text = "$" + Math.Abs(Money);

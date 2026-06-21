@@ -10,6 +10,9 @@ public partial class Customer : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Stubborness = GD.RandRange(1000, 10000);
+
+
 	}
 	
 	private float speed = 100;
@@ -18,7 +21,7 @@ public partial class Customer : Node2D
 	public override void _Process(double delta)
 	{
 		float amountToWalk = speed * (float)delta;
-		
+
 		// debug text GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
 		
 		if (!firstDestinationReached)
@@ -37,17 +40,35 @@ public partial class Customer : Node2D
 			finalDestinationReached = GetPosition() == finalDestination;
 		}
 
-		if (finalDestinationReached && desiredMachine.playing == false)
+		if(desiredMachine == null)
 		{
-			desiredMachine.PlayLottoGame();
+			return;
 		}
+		else if(desiredMachine.playing == true)
+		{
+			return;
+		}
+		else if(finalDestinationReached == true)
+		{
 
+			desiredMachine.PlayGame += OnPlayGameSignal; // TO DO: ACTUAL SELECTION MECHANICS AAAAAGH
 
+			desiredMachine.PlayLottoGame();
+
+			GD.Print("My Stubborn is" + Stubborness);
+		}
 
 
 	}
 
 
+
+	private void OnPlayGameSignal(int payouted)
+	{
+		Stubborness -= payouted;
+		GD.Print("I Feel like" + Stubborness);
+
+	}
 
 	
 	private Vector2 firstDestination;
@@ -90,7 +111,11 @@ public partial class Customer : Node2D
 		}
 
 		desiredMachine = machine;
-
 		currentCounterAt = counter;
 	}
+
+
+
+
+
 }

@@ -49,7 +49,7 @@ public partial class LottoMachine : Node2D
 		// roll evil attractiveness
 
 		// TimeToPlay
-		TimeToPlay = 1000u * (ulong)Global.Random.Next(10, 30); // 10-30 seconds
+		TimeToPlay = 100u * (ulong)Global.Random.Next(10, 30); // 10-30 seconds  NOTE I SET IT TO 1/10th FOR SANITY DURING TESTING FORGIVE MEEEEEEEE
 		// roll evil time
 
 		// CostPerPlay
@@ -139,7 +139,7 @@ public partial class LottoMachine : Node2D
 		double smallChance = 0.2, // 1/5
 		double mediumChance = 0.15, // 3/20
 		double largeChance =  0.01, // 1/10
-		double jackpotChance = 0.05 // 1/20
+		double jackpotChance = 100 // 0.05 // 1/20
 	)
 	{
 		ChanceHouseWins = chanceHouseWins;
@@ -176,9 +176,9 @@ public partial class LottoMachine : Node2D
 		button = GetNode<Button>("Button");
 		// this should be handled by casino not global shenanigans?
 		//PlayGame += Casino.Instance.OnPlayGameSignal;
-		
+
 		// get button signal
-		button.Pressed += PlayLottoGame;
+		//button.Pressed += PlayLottoGame();
 		
 		machineSprite = GetNode<Sprite2D>("Sprite2D");
 
@@ -201,7 +201,6 @@ public partial class LottoMachine : Node2D
 	// start playing, put money in towards casino total money
 	public void PlayLottoGame()
 	{
-
 		button.Disabled = true;
 		
 		EmitSignal(SignalName.PlayGame, CostPerPlay);
