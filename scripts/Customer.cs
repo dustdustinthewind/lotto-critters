@@ -5,6 +5,8 @@ public partial class Customer : Node2D
 {
 	public int Stubborness;
 	
+	LottoMachine desiredMachine;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -17,7 +19,7 @@ public partial class Customer : Node2D
 	{
 		float amountToWalk = speed * (float)delta;
 		
-		GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
+		// debug text GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
 		
 		if (!firstDestinationReached)
 		{
@@ -34,7 +36,19 @@ public partial class Customer : Node2D
 			SetPosition(GetPosition().MoveToward(finalDestination, amountToWalk));
 			finalDestinationReached = GetPosition() == finalDestination;
 		}
+
+		if (finalDestinationReached)
+		{
+			desiredMachine.PlayLottoGame();
+		}
+
+
+
+
 	}
+
+
+
 	
 	private Vector2 firstDestination;
 	private bool firstDestinationReached = true;
@@ -50,6 +64,7 @@ public partial class Customer : Node2D
 	private const string PATH_TRAVEL_REGION = "Area2D/CustomerTravelRegion";
 	public void ChooseMachineToWalkTo(Counter counter, LottoMachine machine)
 	{
+
 		finalDestination = ((CustomerTravelRegion)machine.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
 		finalDestinationReached = false;
 		
@@ -73,7 +88,9 @@ public partial class Customer : Node2D
 				secondDestinationReached = false;
 			}
 		}
-		
+
+		desiredMachine = machine;
+
 		currentCounterAt = counter;
 	}
 }

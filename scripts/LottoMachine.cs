@@ -13,6 +13,8 @@ public partial class LottoMachine : Node2D
 	public double Evil; // a compliance/event-important variable
 
 	public int CostPerPlay = 69; // controllable by player
+
+	private double Cooldown;
 	
 	public ulong TimeToPlay;
 	private ulong whenDonePlaying;
@@ -47,7 +49,7 @@ public partial class LottoMachine : Node2D
 		// roll evil attractiveness
 
 		// TimeToPlay
-		TimeToPlay = 1000u * (ulong)Global.Random.Next(1, 2); // 10-30 seconds
+		TimeToPlay = 5u * (ulong)Global.Random.Next(1, 2); // 10-30 seconds
 		// roll evil time
 
 		// CostPerPlay
@@ -118,7 +120,7 @@ public partial class LottoMachine : Node2D
 	public override void _Ready()
 	{
 		button = GetNode<Button>("Button");
-		
+		Cooldown = TimeToPlay;
 		// this should be handled by casino not global shenanigans?
 		//PlayGame += Casino.Instance.OnPlayGameSignal;
 		
@@ -126,6 +128,8 @@ public partial class LottoMachine : Node2D
 		button.Pressed += PlayLottoGame;
 		
 		machineSprite = GetNode<Sprite2D>("Sprite2D");
+
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -136,6 +140,12 @@ public partial class LottoMachine : Node2D
 			playing = false;
 			DoAPayout();
 		}
+
+		if(Cooldown > 0)
+		{
+			Cooldown -= delta;
+		}
+
 	}
 	
 	private PackedScene moneyNotif = (PackedScene)GD.Load("res://scenes/money_notification.tscn");	
@@ -143,6 +153,15 @@ public partial class LottoMachine : Node2D
 	// start playing, put money in towards casino total money
 	public void PlayLottoGame()
 	{
+
+		if(Cooldown > 0)
+		{
+			return;
+		} else 
+		{
+			Cooldown = TimeToPlay;
+		}
+
 		button.Disabled = true;
 		
 		EmitSignal(SignalName.PlayGame, CostPerPlay);
@@ -155,6 +174,8 @@ public partial class LottoMachine : Node2D
 		playing = true;
 		whenDonePlaying = Clock.Instance.PlayTimeElapsed + TimeToPlay;
 		machineSprite.Modulate = new Color(0.4f, 0.4f, 0.4f);
+
+
 	}
 	
 	public void DoAPayout()
