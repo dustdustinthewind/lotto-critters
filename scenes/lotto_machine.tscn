@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bpsev8cf1dnb5" path="res://scripts/LottoMachine.cs" id="1_02tc8"]
 [ext_resource type="Texture2D" uid="uid://bxfr2v6bco6ig" path="res://textures/test machine scaled.png" id="2_yh7s0"]
 [ext_resource type="Script" uid="uid://beljhavl1i1nh" path="res://scripts/CustomerTravelRegion.cs" id="3_nqvff"]
+[ext_resource type="Script" uid="uid://cr47tfbqy3odv" path="res://scripts/ProgressBar.cs" id="4_j2odl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yh7s0"]
 size = Vector2(76, 48)
@@ -15,7 +16,6 @@ custom_minimum_size = Vector2(130, 80)
 offset_right = 130.0
 offset_bottom = 99.0
 border_width = 3.0
-editor_only = false
 metadata/_edit_lock_ = true
 
 [node name="Button" type="Button" parent="." unique_id=1827952168]
@@ -49,3 +49,15 @@ offset_bottom = 23.5
 border_color = Color(0, 0.6, 0.69803923, 1)
 border_width = 3.0
 metadata/_edit_lock_ = true
+
+[node name="HealthBar" type="Polygon2D" parent="." unique_id=1563634025]
+position = Vector2(0, 80)
+color = Color(1, 0.16078432, 0.20392157, 1)
+polygon = PackedVector2Array(0, 0, 128, 0, 128, 8, 0, 8)
+script = ExtResource("4_j2odl")
+
+[node name="PlayTimeBar" type="Polygon2D" parent="." unique_id=1628595726]
+position = Vector2(0, 88)
+color = Color(0.13725491, 0.42745098, 0.72156864, 1)
+polygon = PackedVector2Array(0, 0, 128, 0, 128, 8, 0, 8)
+script = ExtResource("4_j2odl")
