@@ -48,5 +48,4 @@ offset_right = 38.0
 offset_bottom = 23.5
 border_color = Color(0, 0.6, 0.69803923, 1)
 border_width = 3.0
-editor_only = false
 metadata/_edit_lock_ = true

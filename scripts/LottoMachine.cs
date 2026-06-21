@@ -12,9 +12,7 @@ public partial class LottoMachine : Node2D
 	
 	public double Evil; // a compliance/event-important variable
 
-	public int CostPerPlay = 69; // controllable by player
-
-	private double Cooldown;
+	public int CostPerPlay;
 	
 	public ulong TimeToPlay;
 	private ulong whenDonePlaying;
@@ -31,6 +29,8 @@ public partial class LottoMachine : Node2D
 	private int newMachineNovelty; // an attractiveness bonus from a new machine people are more attracted/curious to try it out
 	public int noveltyDrain; // how much NewMachineAttractivenessBonus drains per play
 	
+	public double ChanceHouseWins;
+	
 	//debug/testing
 	private Button button;
 
@@ -45,11 +45,11 @@ public partial class LottoMachine : Node2D
 		// attractiveness
 		attractiveness = Global.Random.Next(40, 100); // range 40-100
 		NewMachineNovelty = Global.Random.Next(20, 40); // range 20-40
-		noveltyDrain = 100 / attractiveness * Global.Random.Next(1, 4);
+		noveltyDrain = 100 / attractiveness * Global.Random.Next(2, 4);
 		// roll evil attractiveness
 
 		// TimeToPlay
-		TimeToPlay = 5u * (ulong)Global.Random.Next(1, 2); // 10-30 seconds
+		TimeToPlay = 1000u * (ulong)Global.Random.Next(10, 30); // 10-30 seconds
 		// roll evil time
 
 		// CostPerPlay
@@ -70,13 +70,66 @@ public partial class LottoMachine : Node2D
 		// genetic-swapping here
 		// genes are decided from range of parents
 		// genetic bonuses in most cases
+		
+		// use previously generated attractiveness to determine our attractiveness bonus
+		// will be a value between 6 and 14
+		int attractivenessBonus = attractiveness / 10 + NewMachineNovelty / 10;
+		// choose a value between attractiveness bonus and 20
+		attractivenessBonus = Global.Random.Next(attractivenessBonus, 20);
+		// make it a negative if we roll below half the evil modifier
+		attractivenessBonus *= Global.Random.NextDouble() < Evil/1.67 ? -1 : 1;
+		// choose a random number between the two parents attractiveness.
+		int parentAttractiveness = Global.Random.Next(Math.Min(parent1.attractiveness, parent2.attractiveness), Math.Max(parent1.attractiveness, parent2.attractiveness));
+		// add genetic attractiveness with the bonus
+		attractiveness = parentAttractiveness + attractivenessBonus;
+		
+		// use perviously generated TimeToPlay to determine our bonus to playtime
+		// (less time to play is preferrable)
+		// will be a value between 1 and 5
+		ulong playTimeBonus = TimeToPlay / 6000u;
+		// choose a value between playTimeBonus and playTimeBonus * 1.6
+		// will be value between 1 and 8 seconds
+		playTimeBonus = (ulong)Global.Random.Next((int)playTimeBonus, (int)(playTimeBonus * 1.6));
+		// choose a time to play between the two parents time to plays
+		ulong parentPlayTime = (ulong)Global.Random.Next(Math.Min((int)parent1.TimeToPlay, (int)parent2.TimeToPlay), Math.Max((int)parent1.TimeToPlay, (int)parent2.TimeToPlay));
+		// give new machine a time to play between 100 ms and parentPlayTime+playTimeBonus, depending on whats higher
+		// make it negative so we have lower time to play, unless evil roll makes it positive
+		TimeToPlay = Global.Random.NextDouble() < Evil*1.33 ?
+			Math.Max(100u, parentPlayTime + playTimeBonus)  :
+			Math.Max(100u, parentPlayTime - playTimeBonus)  ;
+		
+		// use previously generated CostPerPlay to determine our bonus to cost
+		int costBonus = CostPerPlay / (Global.Random.Next(2, 10));
+		// evil modifier to make it negative instead of positive
+		costBonus *= Global.Random.NextDouble() < Evil ? -1 : 1;
+		// choose a random number between the two parents cost to play
+		int parentCostToPlay = Global.Random.Next(Math.Min(parent1.CostPerPlay, parent2.CostPerPlay), Math.Max(parent1.CostPerPlay, parent2.CostPerPlay));
+		// add genetic cost to play with the bonus
+		CostPerPlay = parentCostToPlay + costBonus;
+		
+		// Todo: evil shit
+		SetRandomPayouts(
+			randomBetweenTwoDoubles(parent1.ChanceHouseWins, parent2.ChanceHouseWins),
+			randomBetweenTwoDoubles(parent1.Payouts.tinyChance, parent2.Payouts.tinyChance),
+			randomBetweenTwoDoubles(parent1.Payouts.smallChance, parent2.Payouts.smallChance),
+			randomBetweenTwoDoubles(parent1.Payouts.mediumChance, parent2.Payouts.mediumChance),
+			randomBetweenTwoDoubles(parent1.Payouts.largeChance, parent2.Payouts.largeChance),
+			randomBetweenTwoDoubles(parent1.Payouts.jackpotChance, parent2.Payouts.jackpotChance)
+		);
+	}
+	
+	private double randomBetweenTwoDoubles(double val1, double val2)
+	{
+		double min = Math.Min(val1, val2);
+		double max = Math.Min(val1, val2) - min;
+		return min + (Global.Random.NextDouble() * max);
 	}
 
 	public void SetRandomPayouts()
 	{
 		// house chance of winning is 50% to 80%
 		// upgradeable to 90%
-		SetRandomPayouts(0.5 + (Global.Random.NextDouble() * 0.3));
+		SetRandomPayouts(randomBetweenTwoDoubles(0.5, 0.8));
 	}
 
 	public void SetRandomPayouts(
@@ -89,6 +142,7 @@ public partial class LottoMachine : Node2D
 		double jackpotChance = 0.05 // 1/20
 	)
 	{
+		ChanceHouseWins = chanceHouseWins;
 		double chancePlayerWins = 1.0-chanceHouseWins;
 		
 		// TODO: evil modifications

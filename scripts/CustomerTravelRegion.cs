@@ -18,7 +18,8 @@ public partial class CustomerTravelRegion : CollisionShape2D
 	
 	public override void _Draw()
 	{
-		DrawCircle(randomPoint - GlobalPosition, 5, new Color(0, 1, 1));
+		//debug
+		//DrawCircle(randomPoint - GlobalPosition, 5, new Color(0, 1, 1));
 	}
 	
 	private int buffer = 25;
