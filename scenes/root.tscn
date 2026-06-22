@@ -186,7 +186,7 @@ position = Vector2(256, 360)
 position = Vector2(256, 560)
 
 [node name="Customer" parent="Casino" unique_id=433102505 instance=ExtResource("5_jh1ax")]
-position = Vector2(978, 856)
+position = Vector2(1079, 849)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Casino" unique_id=1076347697]
 root_node = NodePath("../..")
@@ -297,6 +297,15 @@ offset_bottom = 55.0
 text = "PARLAY!"
 label_settings = SubResource("LabelSettings_vgks2")
 metadata/_edit_lock_ = true
+
+[node name="MusicToggle" type="Node2D" parent="Casino" unique_id=1899482286]
+position = Vector2(197, 157)
+
+[node name="Button" type="Button" parent="Casino/MusicToggle" unique_id=519170392]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Casino/MusicToggle" unique_id=1107500473]
 
 [connection signal="CustomerWasConsumed" from="Casino/Customer" to="Casino" method="OnCustomerConsumed"]
 [connection signal="toggled" from="Casino/ParlayDoor" to="Casino/AnimationPlayer" method="_on_parlay_door_toggled" binds= [false]]

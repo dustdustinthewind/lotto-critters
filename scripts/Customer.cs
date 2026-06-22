@@ -81,7 +81,7 @@ public partial class Customer : Node2D
 		if(Patience <= 0)
 		{
 			desiredMachine = null;
-			finalDestination = new Vector2(1000, 1000);
+			GoHome();
 		}
 		else if(desiredMachine == null) // If no machine is chosen skip this
 		{
@@ -96,6 +96,7 @@ public partial class Customer : Node2D
 			{
 				GD.Print("MY MACHINE IS ONLY " + desiredMachine.Attractiveness + " and I am craving " + (-(Mood / 10) + Want));
 				Patience--;
+				GD.Print("MY PATIENCE IS " + Patience);
 				desiredMachine.PlayGame -= OnPlayGameSignal;
 				desiredMachine = null;
 			} else
@@ -204,10 +205,30 @@ public partial class Customer : Node2D
 			}
 		}
 
+
+
+
+
 		desiredMachine = machine;
 		currentCounterAt = counter;
 	}
 
+
+		public void GoHome()
+		{
+			finalDestination = new Vector2(1100,800);
+			if(this.Position != finalDestination)
+			finalDestinationReached = false;
+
+			if(finalDestinationReached)
+			{
+				GD.Print("I LEAVE NOW");
+				Casino.customerCount--;
+				QueueFree();
+
+			}
+
+		}
 
 
 

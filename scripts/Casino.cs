@@ -326,7 +326,7 @@ public partial class Casino : Sprite2D
 		Customer loser = (Customer)customerScene.Instantiate();
 		VIPDoor.Toggled += loser.OnVIPToggledSignal;
 		loser.CustomerWasConsumed += OnCustomerConsumed;
-		loser.SetPosition(new Vector2(1000, 600));
+		loser.SetPosition(new Vector2(1100, 800));
 
 		AddChild(loser);
 		customerCount++;
@@ -335,13 +335,6 @@ public partial class Casino : Sprite2D
 
 	public static LottoMachine GiveNewMachine(Customer c)
 	{
-		
-		if(GD.RandRange(0, 10000) > c.Mood)
-		{
-			c.QueueFree();
-			customerCount--;
-			return(null);
-		}
 
 		Counter counterChoice = counters[GD.RandRange(0,2)];
 		LottoMachine lottoChoice = counterChoice.Machines[GD.RandRange(0,3)];
