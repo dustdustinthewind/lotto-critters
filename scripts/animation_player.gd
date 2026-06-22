@@ -19,11 +19,13 @@ func _on_parlay_door_toggled(toggled_on: bool, _extra_arg_0: bool) -> void:
 		Clock.ResumeClock()
 		stop()
 
-
+@onready var dim = get_node("ColorRect")
 func _on_vip_door_toggled(toggled_on: bool) -> void:
 	if toggled_on == true:
 		Clock.PauseClock()
+		dim.visible = true;
 	else:
 		Clock.ResumeClock()
+		dim.visible = false;
 		stop()
 	pass
