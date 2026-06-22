@@ -3,7 +3,12 @@ using System;
 
 public partial class Customer : Node2D
 {
-	public int Stubborness;
+	public int Mood; // how likely are they to stay at a machine or leave
+	public double Stay; // how long until a new Want is generated
+	public double stayDelay;
+	public int Patience; // when patience runs out they leave
+	public int Want; // rng number for modulating mood
+
 	
 	private LottoMachine desiredMachine;
 
@@ -14,12 +19,19 @@ public partial class Customer : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Stubborness = GD.RandRange(1000, 10000);
+		Mood = GD.RandRange(1000, 5000);
+		Stay = GD.RandRange(3, 8);
+		stayDelay = Stay;
+		Want = 0;
+		Patience = GD.RandRange(1, 8);
+
 		selfButton = GetNode<Button>("Button");
 		sprite = GetNode<Sprite2D>("Sprite2D");
 		sprite2 = GetNode<Sprite2D>("Sprite2D2");
 		// iknow we should just be changing sprites but fuck you,. easier than
 		// changing offsets and scales everyt ime
+
+
 	}
 	
 	private float speed = 100;
@@ -34,7 +46,15 @@ public partial class Customer : Node2D
 		
 		float amountToWalk = speed * (float)delta;
 
-		// debug text GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
+		if(stayDelay <= 0)
+		{
+			Want = GD.RandRange(0,1000);
+			GD.Print("My New Want Is " + Want);
+			stayDelay = Stay;
+		}
+
+
+		//GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
 		
 		if (!firstDestinationReached)
 		{
@@ -57,22 +77,35 @@ public partial class Customer : Node2D
 			QueueFree();
 		}
 
-		if(desiredMachine == null)
+
+		if(Patience <= 0)
 		{
+			desiredMachine = null;
+			finalDestination = new Vector2(1000, 1000);
+		}
+		else if(desiredMachine == null) // If no machine is chosen skip this
+		{
+			desiredMachine = Casino.GiveNewMachine(this);
 			return;
 		}
-		else if(desiredMachine.playing == true)
-		{
+		else if(desiredMachine.playing == true || desiredMachine.refractoring == true) // If the machine is being played or resetting itself skip
 			return;
-		}
-		else if(finalDestinationReached == true)
+		else if(finalDestinationReached == true) // Are we actually in front of the machine
 		{
-
-			desiredMachine.PlayGame += OnPlayGameSignal; // TO DO: ACTUAL SELECTION MECHANICS AAAAAGH
-
+			if(desiredMachine.Attractiveness < -(Mood / 10) + Want) // Mood puts into the negative, Want value puts into positives, if Want is higher than Attractiveness they move machines
+			{
+				GD.Print("MY MACHINE IS ONLY " + desiredMachine.Attractiveness + " and I am craving " + (-(Mood / 10) + Want));
+				Patience--;
+				desiredMachine.PlayGame -= OnPlayGameSignal;
+				desiredMachine = null;
+			} else
+			{
+			stayDelay--;
+			GD.Print(stayDelay);
+			desiredMachine.PlayGame += OnPlayGameSignal;
 			desiredMachine.PlayLottoGame();
+			}
 
-			//GD.Print("My Stubborn is " + Stubborness);
 		}
 
 
@@ -113,25 +146,25 @@ public partial class Customer : Node2D
 		firstDestination = ((CustomerTravelRegion)currentCounterAt.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
 		firstDestinationReached = false;
 		secondDestinationReached = true;
-		finalDestination = new Vector2(950, 140); // lmfao hardcoded parlay door location
+		finalDestination = new Vector2(950, 140); // lmfao hardcoded parlay door location |||| hardcodeeznuts
 		finalDestinationReached = false;
 		killAtFinalDestination = true;
 	}
 
 	private void OnPlayGameSignal(int payouted)
 	{
-		Stubborness -= payouted;
-		//GD.Print("I Feel like " + Stubborness);
-
+		Mood -= payouted;
+		GD.Print("I Feel like " + Mood);
+		desiredMachine.PlayGame -= OnPlayGameSignal;
 	}
 
 	
 	private Vector2 firstDestination;
-	private bool firstDestinationReached = true;
+	private bool firstDestinationReached;
 	private Vector2 secondDestination;
-	private bool secondDestinationReached = true;
+	private bool secondDestinationReached;
 	private Vector2 finalDestination;
-	private bool finalDestinationReached = true;
+	private bool finalDestinationReached;
 	private bool killAtFinalDestination = false; // killed at casino
 	private bool leaveAtFinalDestination = false; // leave casino
 	
@@ -141,7 +174,10 @@ public partial class Customer : Node2D
 	
 	private const string PATH_TRAVEL_REGION = "Area2D/CustomerTravelRegion";
 	public void ChooseMachineToWalkTo(Counter counter, LottoMachine machine)
-	{
+	{		
+
+		if(machine == null)
+		return;
 
 		finalDestination = ((CustomerTravelRegion)machine.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
 		finalDestinationReached = false;

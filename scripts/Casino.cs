@@ -9,6 +9,10 @@ public partial class Casino : Sprite2D
 	public int Taxes; // Daily property taxes that drain your resources
 
 	public float Reputation; // 1-10 / 5 star system
+
+	public static int customerCount;
+	public int customerRate;
+
 	
 	[Signal]
 	public delegate void CasinoHasResourcesEventHandler();
@@ -58,12 +62,13 @@ public partial class Casino : Sprite2D
 	
 	private Label timeCounter;
 	
-	private Counter[] counters = new Counter[3];
+	public static Counter[] counters = new Counter[3];
 	
 	// debug/testing
 	private PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
 
 	private Button parlayButton;
+	private PackedScene customerScene = (PackedScene)GD.Load("res://scenes/customer.tscn");
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -80,6 +85,9 @@ public partial class Casino : Sprite2D
 		
 		customer = (Customer)GetNode<Node2D>("Customer");
 		PrepCountersAndButtons();
+
+		customerCount = 0;
+
 	}
 	
 	//debug/testing
@@ -189,9 +197,6 @@ public partial class Casino : Sprite2D
 			
 		GD.Print("machine added successfully");
 		
-		if (!customer.IsWalking)
-			customer.ChooseMachineToWalkTo(counters[counter], counters[counter].Machines[slot]);
-		
 		currentNumberMachines++;
 		if (currentNumberMachines >= maxNumberMachines)
 			DisableMachineSlots();
@@ -283,6 +288,9 @@ public partial class Casino : Sprite2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if(customerCount <= 16)
+		CreateCustomer();
+
 	}
 	
 	public override void _Input(InputEvent @event)
@@ -305,4 +313,45 @@ public partial class Casino : Sprite2D
 			}
 		}
 	}
+
+		// HERE BE CUSTOMER LOGICS and dragons
+
+		public void CreateCustomer()
+	{
+		if(customerCount >= 16)
+		return;
+
+		Customer loser = (Customer)customerScene.Instantiate();
+
+		loser.SetPosition(new Vector2(1000, 600));
+
+		AddChild(loser);
+		customerCount++;
+
+	}
+
+	public static LottoMachine GiveNewMachine(Customer c)
+	{
+		
+		if(GD.RandRange(0, 10000) > c.Mood)
+		{
+			c.QueueFree();
+			customerCount--;
+			return(null);
+		}
+
+		Counter counterChoice = counters[GD.RandRange(0,2)];
+		LottoMachine lottoChoice = counterChoice.Machines[GD.RandRange(0,3)];
+
+		c.ChooseMachineToWalkTo(counterChoice, lottoChoice);
+
+		return(lottoChoice);
+
+	}
+
+
+
+
+
+
 }

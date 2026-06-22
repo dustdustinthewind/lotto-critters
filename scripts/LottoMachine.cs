@@ -23,7 +23,7 @@ public partial class LottoMachine : Node2D
 	private ulong whenDonePlaying;
 	public bool playing = false;
 	
-	private bool refractoring = false;
+	public bool refractoring = false;
 	private ulong refractoryPeriod = 888;
 	private ulong whenDoneRefractory;
 
