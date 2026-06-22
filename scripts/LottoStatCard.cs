@@ -62,6 +62,14 @@ public partial class LottoStatCard : ColorRect
 		}
 	}
 	
+	public Button upgradeCondition;
+	public Button upgradeAttractiveness;
+	public Button upgradePlayTime;
+	public Button upgradeCost;
+	public Button upgradeChances;
+	public Button upgradePayouts;
+	public Button upgradeEvil;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -86,14 +94,70 @@ public partial class LottoStatCard : ColorRect
 		jackpotChance = GetNode<Label>(payoutLocation + "Jackpot/Chance");
 		jackpotPayout = GetNode<Label>(payoutLocation + "Jackpot/Payout");
 		
+		string upgradeLocation = "ColorRect/HBoxContainer/Upgrades/HBoxContainer/";
+		upgradeCondition = GetNode<Button>(upgradeLocation + "Upgrades1/Condition");
+		upgradeAttractiveness = GetNode<Button>(upgradeLocation + "Upgrades1/Attractiveness");
+		upgradePlayTime = GetNode<Button>(upgradeLocation + "Upgrades1/Playtime");
+		upgradeCost = GetNode<Button>(upgradeLocation + "Upgrades1/Cost");
+		upgradeChances = GetNode<Button>(upgradeLocation + "Upgrades2/Chances");
+		upgradePayouts = GetNode<Button>(upgradeLocation + "Upgrades2/Payouts");
+		upgradeEvil = GetNode<Button>(upgradeLocation + "Upgrades2/Evil");
+		
+		upgradeCondition.Pressed += DisableButtons;
+		upgradeAttractiveness.Pressed += DisableButtons;
+		upgradePlayTime.Pressed += DisableButtons;
+		upgradeCost.Pressed += DisableButtons;
+		upgradeChances.Pressed += DisableButtons;
+		upgradePayouts.Pressed += DisableButtons;
+		upgradeEvil.Pressed += DisableButtons;
+		
 		ZIndex = 99;
 		
 		if (GlobalPosition.Y < 0)
 			Position += new Vector2(0, 500);
 	}
+	
+	private bool enabled = false;
+	
+	public void ToggleButtons()
+	{
+		if (enabled) DisableButtons();
+		else EnableButtons();
+	}
+	
+	public void EnableButtons()
+	{
+		upgradeCondition.Disabled = false;
+		upgradeAttractiveness.Disabled = false;
+		upgradePlayTime.Disabled = false;
+		upgradeCost.Disabled = false;
+		upgradeChances.Disabled = false;
+		upgradePayouts.Disabled = false;
+		upgradeEvil.Disabled = false;
+		
+		enabled = true;
+		
+		Visible = true;
+	}
+	
+	public void DisableButtons()
+	{
+		upgradeCondition.Disabled = true;
+		upgradeAttractiveness.Disabled = true;
+		upgradePlayTime.Disabled = true;
+		upgradeCost.Disabled = true;
+		upgradeChances.Disabled = true;
+		upgradePayouts.Disabled = true;
+		upgradeEvil.Disabled = true;
+		
+		enabled = false;
+		
+		Visible = false;
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (enabled) Visible = true;
 	}
 }

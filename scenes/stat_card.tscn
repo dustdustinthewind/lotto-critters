@@ -78,7 +78,7 @@ label_settings = SubResource("LabelSettings_k2rl7")
 horizontal_alignment = 2
 
 [node name="Margin" type="BoxContainer" parent="ColorRect/HBoxContainer" unique_id=1994637591]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
@@ -204,7 +204,7 @@ label_settings = SubResource("LabelSettings_3gpb8")
 horizontal_alignment = 2
 
 [node name="Margin2" type="BoxContainer" parent="ColorRect/HBoxContainer" unique_id=363915497]
-custom_minimum_size = Vector2(80, 0)
+custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
@@ -220,6 +220,60 @@ size_flags_stretch_ratio = 0.75
 
 [node name="Label" type="Label" parent="ColorRect/HBoxContainer/Upgrades" unique_id=1002390779]
 layout_mode = 2
-text = "Upgrades"
+text = "Upgrades (Click Machine)"
 label_settings = SubResource("LabelSettings_njyfk")
 horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/HBoxContainer/Upgrades" unique_id=518155566]
+layout_mode = 2
+
+[node name="Upgrades1" type="VBoxContainer" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer" unique_id=1218750141]
+layout_mode = 2
+
+[node name="Condition" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades1" unique_id=1289043352]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Improve Condition"
+
+[node name="Attractiveness" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades1" unique_id=1227276572]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Polish Attractiveness"
+
+[node name="Playtime" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades1" unique_id=376113352]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Lower Playtime"
+
+[node name="Cost" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades1" unique_id=138499067]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Increase Cost"
+
+[node name="Upgrades2" type="VBoxContainer" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer" unique_id=1012231807]
+layout_mode = 2
+
+[node name="Chances" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades2" unique_id=1015780194]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Improve House Odds"
+expand_icon = true
+
+[node name="Payouts" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades2" unique_id=377271057]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Decrease Payouts"
+expand_icon = true
+
+[node name="Evil" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades2" unique_id=599766022]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Banish Evil"
+expand_icon = true

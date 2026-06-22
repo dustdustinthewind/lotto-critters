@@ -40,7 +40,6 @@ public partial class LottoMachine : Node2D
 	
 	public double ChanceHouseWins;
 	
-	//debug/testing
 	private Button button;
 
 	// this runs first
@@ -216,15 +215,12 @@ public partial class LottoMachine : Node2D
 		button = GetNode<Button>("Button");
 		
 		statCard = (LottoStatCard)GetNode<ColorRect>("StatCard");
+		statCard.lottoButton = button;
 		statCard.Visible = false;
 		button.MouseEntered += () => statCard.Visible = true;
 		button.MouseExited += () => statCard.Visible = false;
+		button.Pressed += () => statCard.ToggleButtons();
 		Clock.Instance.TickTock += UpdateStatCard;
-		// this should be handled by casino not global shenanigans?
-		//PlayGame += Casino.Instance.OnPlayGameSignal;
-
-		// get button signal
-		//button.Pressed += PlayLottoGame();
 		
 		machineSprite = GetNode<Sprite2D>("Sprite2D");
 		
@@ -282,8 +278,6 @@ public partial class LottoMachine : Node2D
 	{
 		if (playing || refractoring) return;
 		
-		button.Disabled = true;
-		
 		int costThisPlay = Global.Random.Next(0, CostPerPlay < 10 ? 2 : CostPerPlay < 100 ? CostPerPlay / 5 : CostPerPlay / 10);
 		costThisPlay *= Global.Random.NextDouble() < 0.5 ? -1 : 1;
 		costThisPlay *= (int)(Global.Random.NextDouble() < Evil ? Global.Random.NextDouble() * 4 : 1);
@@ -315,7 +309,6 @@ public partial class LottoMachine : Node2D
 	
 	public void DoAPayout()
 	{
-		button.Disabled = false;
 		machineSprite.Modulate = new Color(1, 1, 1);
 		
 		// refractory period
