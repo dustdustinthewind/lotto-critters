@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://be3wgafv26tx2" path="res://textures/parlay door.png" id="6_3hfy5"]
 [ext_resource type="Texture2D" uid="uid://bc2v40ulj2bup" path="res://textures/parlay door open.png" id="7_7pvxh"]
 [ext_resource type="Texture2D" uid="uid://bxqrdcgfjrong" path="res://textures/vip door.png" id="8_y3xxt"]
+[ext_resource type="Texture2D" uid="uid://b386eysxckoqt" path="res://textures/vip door open.png" id="9_y3xxt"]
+[ext_resource type="Texture2D" uid="uid://c2ayh5v5jakgq" path="res://textures/spotlight.png" id="10_xsp7o"]
+[ext_resource type="Script" uid="uid://8xeekt2jourj" path="res://scenes/animation_player.gd" id="11_l5cgh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jh1ax"]
 font = ExtResource("4_kycxp")
@@ -17,6 +20,84 @@ font_size = 36
 font = ExtResource("4_kycxp")
 font_size = 52
 font_color = Color(0, 0.69, 0.022999978, 1)
+
+[sub_resource type="Animation" id="Animation_vgks2"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Casino/Spotlight:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(345.99997, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Casino/Spotlight:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-69.999985, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Casino/Spotlight:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.4027696, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_dylgi"]
+resource_name = "parlay_spotlight_down"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Casino/Spotlight:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(345.99997, -0.25, 0, 0.25, 0, 346, -0.16666667, -5.086263e-06, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Casino/Spotlight:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(-69.999985, -0.25, 0, 0.25, 0, 47.000015, -0.16666667, -19.5, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Casino/Spotlight:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0.4027696, -0.25, 0, 0.25, 0, 0.4027696, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jrhyn"]
+_data = {
+&"RESET": SubResource("Animation_vgks2"),
+&"parlay_spotlight_down": SubResource("Animation_dylgi")
+}
 
 [node name="GameRootProbably" type="Node2D" unique_id=432179694]
 
@@ -58,6 +139,7 @@ offset_left = 160.0
 offset_top = 8.0
 offset_right = 311.0
 offset_bottom = 137.0
+toggle_mode = true
 texture_normal = ExtResource("6_3hfy5")
 texture_hover = ExtResource("7_7pvxh")
 
@@ -67,3 +149,17 @@ offset_top = 12.0
 offset_right = 1043.0
 offset_bottom = 141.0
 texture_normal = ExtResource("8_y3xxt")
+texture_hover = ExtResource("9_y3xxt")
+
+[node name="Spotlight" type="Sprite2D" parent="Casino" unique_id=1477530166]
+position = Vector2(345.99997, -69.999985)
+rotation = 0.4027696
+scale = Vector2(0.22851563, 0.19921876)
+texture = ExtResource("10_xsp7o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Casino" unique_id=1076347697]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_jrhyn")
+script = ExtResource("11_l5cgh")
+
+[connection signal="toggled" from="Casino/ParlayDoor" to="Casino/AnimationPlayer" method="_on_parlay_door_toggled" binds= [false]]
