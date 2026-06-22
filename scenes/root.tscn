@@ -23,8 +23,8 @@ tracks/0/path = NodePath("Casino/Spotlight:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.04444445, 57.666668, 0, 0),
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(67.80913, -0.04444445, 57.666668, 0, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
@@ -34,8 +34,8 @@ tracks/1/path = NodePath("Casino/Spotlight:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-69.999985, -0.25, 0, 0.25, 0),
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(-69.150955, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/2/type = "bezier"
@@ -45,7 +45,7 @@ tracks/2/path = NodePath("Casino/Spotlight:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
+"handle_modes": PackedInt32Array(2),
 "points": PackedFloat32Array(0.4027696, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
@@ -83,7 +83,18 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1050, -69.99996)]
+"values": [Vector2(1212.0001, -67.99999)]
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Casino/Spotlight2:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.38262865, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_dylgi"]
@@ -95,9 +106,9 @@ tracks/0/path = NodePath("Casino/Spotlight:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(75, -0.25, 0, 0.25, 0, 75, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -106,8 +117,8 @@ tracks/1/path = NodePath("Casino/Spotlight:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(-69.999985, -0.25, 0, 0.25, 0, 47.000015, -0.16666667, -19.5, 0, 0),
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(-70, 0, 0, 0.16666667, 19.500004, 47.000015, -0.16666667, -19.500004, 0, 0),
 "times": PackedFloat32Array(0, 1)
 }
 tracks/2/type = "bezier"
@@ -117,8 +128,8 @@ tracks/2/path = NodePath("Casino/Spotlight:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0.4027696, -0.25, 0, 0.25, 0, 0.4027696, -0.16666667, 0, 0, 0),
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0.4027696, 0, 0, 0.16666667, 0, 0.4027696, -0.16666667, 0, 0, 0),
 "times": PackedFloat32Array(0, 1)
 }
 tracks/3/type = "value"
@@ -201,7 +212,7 @@ texture_normal = ExtResource("8_y3xxt")
 texture_hover = ExtResource("9_y3xxt")
 
 [node name="Spotlight" type="Sprite2D" parent="Casino" unique_id=1477530166]
-position = Vector2(0, -69.999985)
+position = Vector2(67.80913, -69.150955)
 rotation = 0.4027696
 scale = Vector2(0.22851563, 0.19921876)
 texture = ExtResource("10_xsp7o")
@@ -214,7 +225,7 @@ skew = 0.09893656
 texture = ExtResource("11_vgks2")
 
 [node name="Spotlight2" type="Sprite2D" parent="Casino" unique_id=1487599763]
-position = Vector2(1050, -69.99996)
+position = Vector2(1212.0001, -67.99999)
 rotation = -0.38262865
 scale = Vector2(0.22851561, 0.19921875)
 texture = ExtResource("10_xsp7o")
