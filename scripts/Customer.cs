@@ -20,6 +20,8 @@ public partial class Customer : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (Clock.Instance.IsPaused) return;
+		
 		float amountToWalk = speed * (float)delta;
 
 		// debug text GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);

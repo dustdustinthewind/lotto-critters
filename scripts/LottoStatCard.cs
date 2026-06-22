@@ -30,7 +30,7 @@ public partial class LottoStatCard : ColorRect
 	private Label playTimeLabel;
 	public ulong TimeToPlay
 	{
-		set => playTimeLabel.Text = "Time To Play: " + (double)value / 1000 + " seconds";
+		set => playTimeLabel.Text = String.Format("Time To Play: {0:F1} seconds", (double)value / 1000);
 	}
 	
 	private Label costLabel;
@@ -89,7 +89,7 @@ public partial class LottoStatCard : ColorRect
 		ZIndex = 99;
 		
 		if (GlobalPosition.Y < 0)
-			Position += new Vector2(0, 300);
+			Position += new Vector2(0, 500);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

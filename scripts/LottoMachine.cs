@@ -11,10 +11,13 @@ public partial class LottoMachine : Node2D
 	private ulong birthTime;
 
 	public Payout Payouts;
-	
+	private double[] exponentialMovingAveragePayoutTypes = {1/6.0, 1/6.0, 1/6.0, 1/6.0, 1/6.0, 1/6.0};
+	private double[] exponentialMovingAveragePayoutAmount = {0,0,0,0,0,0};
+		
 	public double Evil; // a compliance/event-important variable
 
 	public int CostPerPlay;
+	private double exponentialMovingAverageCost = 0;
 	
 	public ulong TimeToPlay;
 	private ulong whenDonePlaying;
@@ -24,8 +27,8 @@ public partial class LottoMachine : Node2D
 	private ulong refractoryPeriod = 888;
 	private ulong whenDoneRefractory;
 
-	public int Attractiveness => attractiveness + NewMachineNovelty; // how attractive/addictive this game is compared to others, how much folks wanna play it
-	private int attractiveness;
+	public int Attractiveness => baseAttractiveness + NewMachineNovelty; // how attractive/addictive this game is compared to others, how much folks wanna play it
+	public int baseAttractiveness;
 	
 	public int NewMachineNovelty
 	{
@@ -52,13 +55,15 @@ public partial class LottoMachine : Node2D
 		conditionDrain = Global.Random.NextDouble() < Evil / 1.2 ? Global.Random.Next(3, 6) : Global.Random.Next(1, 4);
 		
 		// attractiveness
-		attractiveness = Global.Random.Next(40, 100); // range 40-100
-		NewMachineNovelty = Global.Random.Next(20, 40); // range 20-40
-		noveltyDrain = 100 / attractiveness * Global.Random.Next(2, 4);
+		baseAttractiveness = Global.Random.Next(40, 100); // range 40-100
+		NewMachineNovelty = Global.Random.Next(80, 140); // range 80-140
+		noveltyDrain = 100 / baseAttractiveness * Global.Random.Next(2, 4);
 		// roll evil attractiveness
 
 		// TimeToPlay
-		TimeToPlay = 100u * (ulong)Global.Random.Next(10, 30); // 10-30 seconds  NOTE I SET IT TO 1/10th FOR SANITY DURING TESTING FORGIVE MEEEEEEEE
+		TimeToPlay = (ulong)Global.Random.Next(950, 1000) * (ulong)Global.Random.Next(8, 15); // ~8-15 seconds
+		// if debugging
+		TimeToPlay /= 10;
 		// roll evil time
 
 		// CostPerPlay
@@ -94,16 +99,18 @@ public partial class LottoMachine : Node2D
 		machineCondition = (int)(prevConditionRatio * MaxCondition);
 		
 		// use previously generated attractiveness to determine our attractiveness bonus
-		// will be a value between 6 and 14
-		int attractivenessBonus = attractiveness / 10 + NewMachineNovelty / 10;
+		// will be a value between 16 and 28
+		int attractivenessBonus = baseAttractiveness / 10 + NewMachineNovelty / 10;
 		// choose a value between attractiveness bonus and 20
 		attractivenessBonus = Global.Random.Next(attractivenessBonus, 20);
 		// make it a negative if we roll below half the evil modifier
 		attractivenessBonus *= Global.Random.NextDouble() < Evil/1.67 ? -1 : 1;
 		// choose a random number between the two parents attractiveness.
-		int parentAttractiveness = randomBetweenTwoInts(parent1.attractiveness, parent2.attractiveness);
+		int parentAttractiveness = randomBetweenTwoInts(parent1.baseAttractiveness, parent2.baseAttractiveness);
 		// add genetic attractiveness with the bonus
-		attractiveness = parentAttractiveness + attractivenessBonus;
+		baseAttractiveness = parentAttractiveness + attractivenessBonus;
+		// recalc novelty drain
+		noveltyDrain = Math.Max(parent1.baseAttractiveness, parent2.baseAttractiveness) / baseAttractiveness * Global.Random.Next(2, 4);
 		
 		// use perviously generated TimeToPlay to determine our bonus to playtime
 		// (less time to play is preferrable)
@@ -237,9 +244,15 @@ public partial class LottoMachine : Node2D
 		statCard.Condition = machineCondition;
 		statCard.Evil = Evil;
 		statCard.TimeToPlay = TimeToPlay;
-		statCard.CostToPlay = CostPerPlay;
+		statCard.CostToPlay = (int)exponentialMovingAverageCost;
 		
-		statCard.Payouts = Payouts;
+		statCard.Payouts = new Payout(
+			(int)exponentialMovingAveragePayoutAmount[1], exponentialMovingAveragePayoutTypes[1],
+			(int)exponentialMovingAveragePayoutAmount[2], exponentialMovingAveragePayoutTypes[2],
+			(int)exponentialMovingAveragePayoutAmount[3], exponentialMovingAveragePayoutTypes[3],
+			(int)exponentialMovingAveragePayoutAmount[4], exponentialMovingAveragePayoutTypes[4],
+			(int)exponentialMovingAveragePayoutAmount[5], exponentialMovingAveragePayoutTypes[5]
+		);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -282,10 +295,19 @@ public partial class LottoMachine : Node2D
 		money.Money = costThisPlay;
 		AddChild(money);
 		
+		double alpha = 0.25;
+		if (exponentialMovingAverageCost == 0)
+			exponentialMovingAverageCost = costThisPlay;
+		else
+			exponentialMovingAverageCost = alpha * (double)costThisPlay + (1.0 - alpha) * exponentialMovingAverageCost;
+
+		
 		// start timer
 		playing = true;
 		whenDonePlaying = Clock.Instance.PlayTimeElapsed + TimeToPlay;
 		machineSprite.Modulate = new Color(0.4f, 0.4f, 0.4f);
+		
+		UpdateStatCard();
 	}
 	
 	private ProgressBar healthBar;
@@ -301,13 +323,9 @@ public partial class LottoMachine : Node2D
 		whenDoneRefractory = Clock.Instance.PlayTimeElapsed + refractoryPeriod;
 		
 		// figure out payout to customer that just played
-		int thisPayout = Payouts.RollRandomPayout();
+		int thisPayout = Payouts.RollRandomPayout(Evil, ref exponentialMovingAveragePayoutTypes, ref exponentialMovingAveragePayoutAmount);
 		if (thisPayout != 0)
-		{
-			int payoutModifier = thisPayout / Global.Random.Next(6, 12);
-			thisPayout += thisPayout / Global.Random.NextDouble() < Evil ? payoutModifier : -payoutModifier;
-			thisPayout = Math.Max(1, thisPayout);
-			
+		{			
 			MoneyNotification loss = (MoneyNotification)moneyNotif.Instantiate();
 			loss.Money = -thisPayout;
 			AddChild(loss);
@@ -319,7 +337,22 @@ public partial class LottoMachine : Node2D
 		machineCondition -= conditionDrain;
 		healthBar.ChangeValue(machineCondition);
 		playTimeBar.ChangeValue(0);
+		
+		// drain novelty
+		NewMachineNovelty -= noveltyDrain;
+		
+		UpdateStatCard();
 	}
+}
+
+public enum PayoutType
+{
+	HOUSE_WON = 0,
+	TINY = 1,
+	SMALL = 2,
+	MEDIUM = 3,
+	LARGE = 4,
+	JACKPOT = 5
 }
 
 public struct Payout
@@ -355,22 +388,60 @@ public struct Payout
 		Jackpot = jackpot; jackpotChance = jackpotPercent;
 	}
 
-	public int RollRandomPayout()
+	public int RollRandomPayout(double evil, ref double[] pema, ref double[] aema)
 	{
+		int payoutToReturn = 0;
+		PayoutType outcome = PayoutType.HOUSE_WON;
+		
 		double roll = Global.Random.NextDouble();
 
 		// send signal based on winnings?
 		if (roll < jackpotChance)
-			return Jackpot;
+		{
+			outcome = PayoutType.JACKPOT;
+			payoutToReturn = Jackpot;
+		}
 		else if (roll < jackpotChance + largeChance)
-			return LargePayout;
+		{
+			outcome = PayoutType.LARGE;
+			payoutToReturn = LargePayout;
+		}
 		else if (roll < jackpotChance + largeChance + mediumChance)
-			return MediumPayout;
+		{
+			outcome = PayoutType.MEDIUM;
+			payoutToReturn = MediumPayout;
+		}
 		else if (roll < jackpotChance + largeChance + mediumChance + smallChance)
-			return SmallPayout;
+		{
+			outcome = PayoutType.SMALL;
+			payoutToReturn = SmallPayout;
+		}
 		else if (roll < jackpotChance + largeChance + mediumChance + smallChance + tinyChance)
-			return TinyPayout;
+		{
+			outcome = PayoutType.TINY;
+			payoutToReturn = TinyPayout;
+		}
+		
+		double alpha = 0.03;
+		
+		for (int i = 0; i < pema.Length; i++)
+		{
+			double wasOutcome = i == (int)outcome ? 1 : 0;
+			pema[i] = alpha * wasOutcome + (1.0 - alpha) * pema[i];
+		}
+		
+		if (outcome == PayoutType.HOUSE_WON) return payoutToReturn;
+		
+		int payoutModifier = payoutToReturn / Global.Random.Next(6, 12);
+		payoutToReturn += payoutToReturn / Global.Random.NextDouble() < evil ? payoutModifier : -payoutModifier;
+		payoutToReturn = Math.Max(1, payoutToReturn);
+		
+		alpha = 0.25;
+		if (aema[(int)outcome] == 0)
+			aema[(int)outcome] = payoutToReturn;
 		else
-			return 0;
+			aema[(int)outcome] = alpha * (double)payoutToReturn + (1.0 - alpha) * aema[(int)outcome];
+		
+		return payoutToReturn;
 	}
 }

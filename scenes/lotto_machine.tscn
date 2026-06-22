@@ -65,6 +65,6 @@ script = ExtResource("4_j2odl")
 
 [node name="StatCard" parent="." unique_id=1965681365 instance=ExtResource("5_5uuth")]
 offset_left = -240.0
-offset_top = -260.0
+offset_top = -332.0
 offset_right = 560.0
-offset_bottom = -60.0
+offset_bottom = -132.0
