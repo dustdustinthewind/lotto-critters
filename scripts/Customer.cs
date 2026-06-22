@@ -111,7 +111,7 @@ public partial class Customer : Node2D
 
 	}
 
-	private void OnVIPToggledSignal(bool toggled)
+	public void OnVIPToggledSignal(bool toggled)
 	{
 		if (toggled)
 		{
@@ -143,8 +143,9 @@ public partial class Customer : Node2D
 	
 	private void OnMouseClicked()
 	{
-		firstDestination = ((CustomerTravelRegion)currentCounterAt.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
-		firstDestinationReached = false;
+		firstDestinationReached = currentCounterAt == null;
+		if (!firstDestinationReached)
+			firstDestination = ((CustomerTravelRegion)currentCounterAt.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
 		secondDestinationReached = true;
 		finalDestination = new Vector2(950, 140); // lmfao hardcoded parlay door location |||| hardcodeeznuts
 		finalDestinationReached = false;

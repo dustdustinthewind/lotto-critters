@@ -81,6 +81,7 @@ public partial class Casino : Sprite2D
 		upgrades = GetNode<Label>("Upgrades");;
 		
 		parlayDoor = GetNode<TextureButton>("ParlayDoor");
+		VIPDoor = GetNode<TextureButton>("VIPDoor");
 		parlayButton = GetNode<Button>("ParlayButton");
 		
 		customer = (Customer)GetNode<Node2D>("Customer");
@@ -110,6 +111,7 @@ public partial class Casino : Sprite2D
 	}
 
 	private TextureButton parlayDoor;
+	private TextureButton VIPDoor;
 	
 	// counter = which counter
 	// slot = which slot on counter
@@ -322,7 +324,8 @@ public partial class Casino : Sprite2D
 		return;
 
 		Customer loser = (Customer)customerScene.Instantiate();
-
+		VIPDoor.Toggled += loser.OnVIPToggledSignal;
+		loser.CustomerWasConsumed += OnCustomerConsumed;
 		loser.SetPosition(new Vector2(1000, 600));
 
 		AddChild(loser);
