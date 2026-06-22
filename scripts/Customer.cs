@@ -5,17 +5,27 @@ public partial class Customer : Node2D
 {
 	public int Stubborness;
 	
-	LottoMachine desiredMachine;
+	private LottoMachine desiredMachine;
+
+	private Button selfButton;
+	private Sprite2D sprite;
+	private Sprite2D sprite2;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Stubborness = GD.RandRange(1000, 10000);
-
-
+		selfButton = GetNode<Button>("Button");
+		sprite = GetNode<Sprite2D>("Sprite2D");
+		sprite2 = GetNode<Sprite2D>("Sprite2D2");
+		// iknow we should just be changing sprites but fuck you,. easier than
+		// changing offsets and scales everyt ime
 	}
 	
 	private float speed = 100;
+	
+	[Signal]
+	public delegate void CustomerWasConsumedEventHandler();
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -41,6 +51,11 @@ public partial class Customer : Node2D
 			SetPosition(GetPosition().MoveToward(finalDestination, amountToWalk));
 			finalDestinationReached = GetPosition() == finalDestination;
 		}
+		else if (killAtFinalDestination)
+		{
+			EmitSignal(SignalName.CustomerWasConsumed);
+			QueueFree();
+		}
 
 		if(desiredMachine == null)
 		{
@@ -63,7 +78,45 @@ public partial class Customer : Node2D
 
 	}
 
-
+	private void OnVIPToggledSignal(bool toggled)
+	{
+		if (toggled)
+		{
+			selfButton.Disabled = false;
+		}
+		else
+		{
+			sprite.Visible = true;
+			sprite2.Visible = false;
+			Scale = new Vector2(1f,1f);
+		}
+	}
+	
+	private void OnMouseEntered()
+	{
+		if (selfButton.Disabled) return;
+		sprite.Visible = false;
+		sprite2.Visible = true;
+			Scale = new Vector2(1.2f, 1.2f);
+	}
+	
+	private void OnMouseExited()
+	{
+		if (selfButton.Disabled) return;
+		sprite.Visible = true;
+		sprite2.Visible = false;
+			Scale = new Vector2(1f,1f);
+	}
+	
+	private void OnMouseClicked()
+	{
+		firstDestination = ((CustomerTravelRegion)currentCounterAt.GetNode<CollisionShape2D>(PATH_TRAVEL_REGION)).GetRandomPoint();
+		firstDestinationReached = false;
+		secondDestinationReached = true;
+		finalDestination = new Vector2(950, 140); // lmfao hardcoded parlay door location
+		finalDestinationReached = false;
+		killAtFinalDestination = true;
+	}
 
 	private void OnPlayGameSignal(int payouted)
 	{
@@ -79,6 +132,8 @@ public partial class Customer : Node2D
 	private bool secondDestinationReached = true;
 	private Vector2 finalDestination;
 	private bool finalDestinationReached = true;
+	private bool killAtFinalDestination = false; // killed at casino
+	private bool leaveAtFinalDestination = false; // leave casino
 	
 	private Counter currentCounterAt;
 	

@@ -13,6 +13,17 @@ func _process(_delta: float) -> void:
 
 func _on_parlay_door_toggled(toggled_on: bool, _extra_arg_0: bool) -> void:
 	if toggled_on == true:
+		Clock.PauseClock()
 		play("parlay_spotlight_down")
 	else:
+		Clock.ResumeClock()
 		stop()
+
+
+func _on_vip_door_toggled(toggled_on: bool) -> void:
+	if toggled_on == true:
+		Clock.PauseClock()
+	else:
+		Clock.ResumeClock()
+		stop()
+	pass

@@ -122,6 +122,20 @@ public partial class LottoStatCard : ColorRect
 	
 	private bool enabled = false;
 	
+	public void OnCasinoHasUpgrades() => casinoHasUpgrades = true;
+	public void OnCasinoHasNoUpgrades() => casinoHasUpgrades = false;
+	
+	public bool CasinoHasUpgrades
+	{
+		get => casinoHasUpgrades;
+		set
+		{
+			if (enabled) EnableButtons();
+			casinoHasUpgrades = value;
+		}
+	}
+	private bool casinoHasUpgrades = false;
+	
 	public void ToggleButtons()
 	{
 		if (enabled) DisableButtons();
@@ -130,14 +144,14 @@ public partial class LottoStatCard : ColorRect
 	
 	public void EnableButtons()
 	{
-		upgradeCondition.Disabled = false;
-		upgradeAttractiveness.Disabled = false;
-		upgradePlayTime.Disabled = false;
-		upgradeCost.Disabled = false;
-		upgradeChances.Disabled = false;
-		upgradePayouts.Disabled = false;
-		upgradeEvil.Disabled = false;
-		upgradeChaos.Disabled = false;
+		upgradeCondition.Disabled = !CasinoHasUpgrades;
+		upgradeAttractiveness.Disabled = !CasinoHasUpgrades;
+		upgradePlayTime.Disabled = !CasinoHasUpgrades;
+		upgradeCost.Disabled = !CasinoHasUpgrades;
+		upgradeChances.Disabled = !CasinoHasUpgrades;
+		upgradePayouts.Disabled = !CasinoHasUpgrades;
+		upgradeEvil.Disabled = !CasinoHasUpgrades;
+		upgradeChaos.Disabled = !CasinoHasUpgrades;
 		
 		enabled = true;
 		

@@ -10,7 +10,24 @@ public partial class Casino : Sprite2D
 
 	public float Reputation; // 1-10 / 5 star system
 	
-	public int UpgradeResources = 10000;
+	[Signal]
+	public delegate void CasinoHasResourcesEventHandler();
+	[Signal]
+	public delegate void CasinoHasNoResourcesEventHandler();
+	
+	public int UpgradeResources
+	{
+		get => upgradeResources;
+		set
+		{
+			if (upgradeResources == 0 && value != 0)
+				EmitSignal(SignalName.CasinoHasResources);
+			else if (upgradeResources != 0 && value == 0)
+				EmitSignal(SignalName.CasinoHasNoResources);
+			upgradeResources = value;
+		}
+	}
+	private int upgradeResources = 0;
 
 	private int maxNumberMachines = 16; // how many machines you can have at once
 	private int MaxNumberMachines
@@ -142,6 +159,9 @@ public partial class Casino : Sprite2D
 			if (!machine.UpgradeChaos()) return;
 			UpgradeResources--;
 		};
+		
+		CasinoHasNoResources += machine.statCard.OnCasinoHasNoUpgrades;
+		CasinoHasResources += machine.statCard.OnCasinoHasUpgrades;
 
 		if (!success)
 			GD.Print("failed to add machine AAAAAAA");
@@ -172,7 +192,12 @@ public partial class Casino : Sprite2D
 	
 	private Label moneyLabel;
 	
-	// this shoulda been private?
+	private void OnCustomerConsumed()
+	{
+		GD.Print("customer ated");
+		UpgradeResources++;
+	}
+	
 	private void OnPlayGameSignal(int costPerPlay)
 	{
 		Money += costPerPlay;
