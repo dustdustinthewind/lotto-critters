@@ -215,7 +215,6 @@ public partial class LottoMachine : Node2D
 		button = GetNode<Button>("Button");
 		
 		statCard = (LottoStatCard)GetNode<ColorRect>("StatCard");
-		statCard.lottoButton = button;
 		statCard.Visible = false;
 		button.MouseEntered += () => statCard.Visible = true;
 		button.MouseExited += () => statCard.Visible = false;
