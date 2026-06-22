@@ -25,9 +25,12 @@ public partial class Counter : Node2D
 		if (Machines[i] == null)
 		{
 			Machines[i] = machine;
+			if (Machines[i].GetParent() != null)
+				Machines[i].GetParent().RemoveChild(Machines[i]);
 			Buttons[i].AddChild(Machines[i]);
 			Buttons[i].Disabled = true;
 			Buttons[i].Flat = true;
+			machine.GlobalPosition = Buttons[i].GlobalPosition;
 			return true;
 		}
 

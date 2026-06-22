@@ -63,6 +63,8 @@ public partial class Casino : Sprite2D
 	// debug/testing
 	private PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
 
+	private Button parlayButton;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
@@ -72,6 +74,9 @@ public partial class Casino : Sprite2D
 		
 		moneyLabel = GetNode<Label>("Money");
 		upgrades = GetNode<Label>("Upgrades");;
+		
+		parlayDoor = GetNode<TextureButton>("ParlayDoor");
+		parlayButton = GetNode<Button>("ParlayButton");
 		
 		customer = (Customer)GetNode<Node2D>("Customer");
 		PrepCountersAndButtons();
@@ -91,15 +96,23 @@ public partial class Casino : Sprite2D
 				int jj = j;
 				
 				counters[i].Buttons[j].Pressed +=
-					() => AddMachine((LottoMachine)testMachine.Instantiate(), ii, jj);
+					() => AddMachine(ii, jj);
 			}
 		}
 	}
+
+	private TextureButton parlayDoor;
 	
 	// counter = which counter
 	// slot = which slot on counter
-	public bool AddMachine(LottoMachine machine, int counter, int slot)
-	{		
+	public bool AddMachine(int counter, int slot)
+	{
+		// debug
+		theChild = theChild == null ? (LottoMachine)testMachine.Instantiate() : theChild;
+		
+		if (theChild == null) return false;
+		LottoMachine machine = theChild;
+		
 		GD.Print("attempting to add machine, " + counter + " " + slot);
 				
 		if (currentNumberMachines >= maxNumberMachines)
@@ -109,7 +122,11 @@ public partial class Casino : Sprite2D
 		}
 		
 		bool success = counters[counter].AddMachine(machine, slot);
+		machine.WhenPlaced();
+		theChild = null;
 		machine.PlayGame += OnPlayGameSignal;
+		machine.IWannaParlay += ParlayTime;
+		parlayDoor.Toggled += machine.OnParlayToggled;
 		
 		// i'm sorry for the stupid shitty code but
 		// i'm not gonna figure the fuck out of func delegates or
@@ -215,6 +232,48 @@ public partial class Casino : Sprite2D
 			moneyLabel.GetLabelSettings().SetFontColor(new Color(0, 176f/255f, 6f/255f));
 	}
 	
+	private LottoMachine parent1;
+	private LottoMachine parent2;
+	private Vector2 parent1OldPosition;
+	private Vector2 parent2OldPosition;
+	
+	private LottoMachine theChild;
+	
+	private void ParlayTime(LottoMachine parent)
+	{
+		if (parent1 == null)
+		{
+			parent1 = parent;
+			parent1OldPosition = parent1.GlobalPosition;
+			parent1.GlobalPosition = new Vector2(860, 280); // hard coding *dabs*
+			((Sprite2D)GetNode<Sprite2D>("Spotlight2/SpotlightLightShaft")).Visible = true;
+			return;
+		}
+		// if we already selected first parent
+		parent2 = parent;
+		parent2OldPosition = parent2.GlobalPosition;
+		parent2.GlobalPosition = new Vector2(260, 280);
+		((Sprite2D)GetNode<Sprite2D>("Spotlight/SpotlightLightShaft")).Visible = true;
+		parlayButton.Visible = true;
+		parlayButton.Pressed += MakeChild;
+	}
+	
+	// parlay/breed
+	private void MakeChild()
+	{
+		((Sprite2D)GetNode<Sprite2D>("Spotlight2/SpotlightLightShaft")).Visible = false;
+		((Sprite2D)GetNode<Sprite2D>("Spotlight/SpotlightLightShaft")).Visible = false;
+		theChild = (LottoMachine)testMachine.Instantiate();
+		theChild.modifyMachineWithParents(parent1, parent2);
+		AddChild(theChild);
+		parlayButton.Pressed -= MakeChild;
+		parlayButton.Visible = false;
+		parent2.GlobalPosition = parent2OldPosition;
+		parent1.GlobalPosition = parent1OldPosition;
+		parent1 = null;
+		parent2 = null;
+	}
+	
 	// called every gameplay second passed
 	private void OnSecondPassed()
 	{
@@ -237,5 +296,13 @@ public partial class Casino : Sprite2D
 					Clock.Instance.PauseClock();
 			else if (keyEvent.Keycode == Key.Key1)
 				MaxNumberMachines++;
+		if (@event is InputEventMouseMotion mouseMoveEvent)
+		{			
+			if (theChild != null)
+			{
+				theChild.GlobalPosition = mouseMoveEvent.Position;
+				theChild.GlobalPosition += new Vector2(50,0);
+			}
+		}
 	}
 }

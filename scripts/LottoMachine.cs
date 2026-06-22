@@ -77,8 +77,7 @@ public partial class LottoMachine : Node2D
 		SetRandomPayouts();
 	}
 
-	// if constructor chaining this runs second
-	public LottoMachine(LottoMachine parent1, LottoMachine parent2) : this()
+	public void modifyMachineWithParents(LottoMachine parent1, LottoMachine parent2)
 	{
 		// genetic-swapping here
 		// genes are decided from range of parents
@@ -201,7 +200,7 @@ public partial class LottoMachine : Node2D
 		);
 	}
 	
-	private void OnParlayToggled(bool toggle)
+	public void OnParlayToggled(bool toggle)
 	{
 		if (toggle)
 		{
@@ -216,9 +215,12 @@ public partial class LottoMachine : Node2D
 		}
 	}
 	
+	[Signal]
+	public delegate void IWannaParlayEventHandler(LottoMachine parent);
+	
 	private void PutUpForParlay()
 	{
-		
+		EmitSignal(SignalName.IWannaParlay, this);
 	}
 	
 	[Signal]
@@ -230,12 +232,19 @@ public partial class LottoMachine : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		birthTime = Clock.Instance.PlayTimeElapsed;
-		
 		button = GetNode<Button>("Button");
 		
 		statCard = (LottoStatCard)GetNode<ColorRect>("StatCard");
 		statCard.Visible = false;
+
+		button.Disabled = true;
+	}
+
+	public void WhenPlaced()
+	{		
+		birthTime = Clock.Instance.PlayTimeElapsed;
+		
+		button.Disabled = false;
 		button.MouseEntered += () => statCard.Visible = true;
 		button.MouseExited += () => statCard.Visible = false;
 		button.Pressed += statCard.ToggleButtons;

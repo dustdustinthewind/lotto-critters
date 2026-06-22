@@ -164,6 +164,11 @@ font_color = Color(0, 0.69, 0.022999978, 1)
 font = ExtResource("4_kycxp")
 font_size = 52
 
+[sub_resource type="LabelSettings" id="LabelSettings_vgks2"]
+font = ExtResource("4_kycxp")
+font_size = 42
+font_color = Color(0.74509805, 0.5411765, 0.5921569, 1)
+
 [node name="GameRootProbably" type="Node2D" unique_id=432179694]
 
 [node name="Casino" type="Sprite2D" parent="." unique_id=207199944]
@@ -190,6 +195,7 @@ script = ExtResource("11_l5cgh")
 
 [node name="ColorRect" type="Polygon2D" parent="Casino/AnimationPlayer" unique_id=436973438]
 visible = false
+z_as_relative = false
 color = Color(0, 0, 0, 0.20392157)
 polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
 
@@ -218,6 +224,8 @@ scale = Vector2(0.22851563, 0.19921876)
 texture = ExtResource("10_xsp7o")
 
 [node name="SpotlightLightShaft" type="Sprite2D" parent="Casino/Spotlight" unique_id=1216903325]
+visible = false
+z_index = 99
 position = Vector2(1152.9966, 440.45435)
 rotation = -0.45458117
 scale = Vector2(4.480954, 4.9262037)
@@ -232,6 +240,8 @@ texture = ExtResource("10_xsp7o")
 flip_h = true
 
 [node name="SpotlightLightShaft" type="Sprite2D" parent="Casino/Spotlight2" unique_id=396269499]
+visible = false
+z_index = 99
 position = Vector2(-1169.2874, 401.69348)
 rotation = 0.4324995
 scale = Vector2(4.471336, 4.934936)
@@ -271,6 +281,22 @@ offset_right = 96.0
 offset_bottom = 64.0
 texture = ExtResource("12_xsp7o")
 expand_mode = 1
+
+[node name="ParlayButton" type="Button" parent="Casino" unique_id=1746313828]
+visible = false
+offset_left = 552.0
+offset_top = 480.0
+offset_right = 720.0
+offset_bottom = 535.0
+
+[node name="Label" type="Label" parent="Casino/ParlayButton" unique_id=335508736]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 164.0
+offset_bottom = 55.0
+text = "PARLAY!"
+label_settings = SubResource("LabelSettings_vgks2")
+metadata/_edit_lock_ = true
 
 [connection signal="CustomerWasConsumed" from="Casino/Customer" to="Casino" method="OnCustomerConsumed"]
 [connection signal="toggled" from="Casino/ParlayDoor" to="Casino/AnimationPlayer" method="_on_parlay_door_toggled" binds= [false]]
