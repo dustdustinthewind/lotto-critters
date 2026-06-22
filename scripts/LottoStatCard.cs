@@ -153,7 +153,7 @@ public partial class LottoStatCard : ColorRect
 		upgradeChances.Disabled = true;
 		upgradePayouts.Disabled = true;
 		upgradeEvil.Disabled = true;
-		upgradeChaos.Disabled = false;
+		upgradeChaos.Disabled = true;
 		
 		enabled = false;
 		
