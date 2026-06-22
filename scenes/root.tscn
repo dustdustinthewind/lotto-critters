@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b386eysxckoqt" path="res://textures/vip door open.png" id="9_y3xxt"]
 [ext_resource type="Texture2D" uid="uid://c2ayh5v5jakgq" path="res://textures/spotlight.png" id="10_xsp7o"]
 [ext_resource type="Script" uid="uid://8xeekt2jourj" path="res://scripts/animation_player.gd" id="11_l5cgh"]
+[ext_resource type="Texture2D" uid="uid://drghl14ntxyti" path="res://textures/spotlight_light_shaft.png" id="11_vgks2"]
 [ext_resource type="Texture2D" uid="uid://e18w032peauf" path="res://textures/upgrade gore bucket.png" id="12_xsp7o"]
 
 [sub_resource type="Animation" id="Animation_vgks2"]
@@ -23,7 +24,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(345.99997, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(0, -0.04444445, 57.666668, 0, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
@@ -48,6 +49,42 @@ tracks/2/keys = {
 "points": PackedFloat32Array(0.4027696, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Casino/Spotlight2:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1050.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Casino/Spotlight2:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-69.99996]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Casino/Spotlight2:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1050, -69.99996)]
+}
 
 [sub_resource type="Animation" id="Animation_dylgi"]
 resource_name = "parlay_spotlight_down"
@@ -58,9 +95,9 @@ tracks/0/path = NodePath("Casino/Spotlight:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(345.99997, -0.25, 0, 0.25, 0, 346, -0.16666667, -5.086263e-06, 0, 0),
-"times": PackedFloat32Array(0, 1)
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -83,6 +120,18 @@ tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 2),
 "points": PackedFloat32Array(0.4027696, -0.25, 0, 0.25, 0, 0.4027696, -0.16666667, 0, 0, 0),
 "times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Casino/Spotlight2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1218.0001, -62.000023), Vector2(1218.0001, 46.999947)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jrhyn"]
@@ -152,10 +201,32 @@ texture_normal = ExtResource("8_y3xxt")
 texture_hover = ExtResource("9_y3xxt")
 
 [node name="Spotlight" type="Sprite2D" parent="Casino" unique_id=1477530166]
-position = Vector2(345.99997, -69.999985)
+position = Vector2(0, -69.999985)
 rotation = 0.4027696
 scale = Vector2(0.22851563, 0.19921876)
 texture = ExtResource("10_xsp7o")
+
+[node name="SpotlightLightShaft" type="Sprite2D" parent="Casino/Spotlight" unique_id=1216903325]
+position = Vector2(1152.9966, 440.45435)
+rotation = -0.45458117
+scale = Vector2(4.480954, 4.9262037)
+skew = 0.09893656
+texture = ExtResource("11_vgks2")
+
+[node name="Spotlight2" type="Sprite2D" parent="Casino" unique_id=1487599763]
+position = Vector2(1050, -69.99996)
+rotation = -0.38262865
+scale = Vector2(0.22851561, 0.19921875)
+texture = ExtResource("10_xsp7o")
+flip_h = true
+
+[node name="SpotlightLightShaft" type="Sprite2D" parent="Casino/Spotlight2" unique_id=396269499]
+position = Vector2(-1169.2874, 401.69348)
+rotation = 0.4324995
+scale = Vector2(4.471336, 4.934936)
+skew = -0.095053434
+texture = ExtResource("11_vgks2")
+flip_h = true
 
 [node name="TimeElapsed" type="Label" parent="Casino" unique_id=1414370657]
 offset_left = 1120.0

@@ -201,6 +201,26 @@ public partial class LottoMachine : Node2D
 		);
 	}
 	
+	private void OnParlayToggled(bool toggle)
+	{
+		if (toggle)
+		{
+			button.Pressed -= statCard.ToggleButtons;
+			button.Pressed += PutUpForParlay;
+			statCard.DisableButtons();
+		}
+		else
+		{
+			button.Pressed -= PutUpForParlay;
+			button.Pressed += statCard.ToggleButtons;
+		}
+	}
+	
+	private void PutUpForParlay()
+	{
+		
+	}
+	
 	[Signal]
 	public delegate void PlayGameEventHandler(int cost);
 		
@@ -218,7 +238,7 @@ public partial class LottoMachine : Node2D
 		statCard.Visible = false;
 		button.MouseEntered += () => statCard.Visible = true;
 		button.MouseExited += () => statCard.Visible = false;
-		button.Pressed += () => statCard.ToggleButtons();
+		button.Pressed += statCard.ToggleButtons;
 		Clock.Instance.TickTock += UpdateStatCard;
 		
 		machineSprite = GetNode<Sprite2D>("Sprite2D");
