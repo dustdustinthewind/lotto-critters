@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b386eysxckoqt" path="res://textures/vip door open.png" id="9_y3xxt"]
 [ext_resource type="Texture2D" uid="uid://c2ayh5v5jakgq" path="res://textures/spotlight.png" id="10_xsp7o"]
 [ext_resource type="Script" uid="uid://8xeekt2jourj" path="res://scripts/animation_player.gd" id="11_l5cgh"]
+[ext_resource type="Texture2D" uid="uid://e18w032peauf" path="res://textures/upgrade gore bucket.png" id="12_xsp7o"]
 
 [sub_resource type="Animation" id="Animation_vgks2"]
 length = 2.8
@@ -99,6 +100,10 @@ font = ExtResource("4_kycxp")
 font_size = 52
 font_color = Color(0, 0.69, 0.022999978, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_l5cgh"]
+font = ExtResource("4_kycxp")
+font_size = 52
+
 [node name="GameRootProbably" type="Node2D" unique_id=432179694]
 
 [node name="Casino" type="Sprite2D" parent="." unique_id=207199944]
@@ -162,6 +167,23 @@ offset_bottom = 107.0
 text = "$0"
 label_settings = SubResource("LabelSettings_j287u")
 horizontal_alignment = 2
+
+[node name="Upgrades" type="Label" parent="Casino" unique_id=2145773713]
+offset_left = 1192.0
+offset_top = 96.0
+offset_right = 1232.0
+offset_bottom = 163.0
+text = "0"
+label_settings = SubResource("LabelSettings_l5cgh")
+horizontal_alignment = 2
+
+[node name="GoreIcon" type="TextureRect" parent="Casino/Upgrades" unique_id=1271792978]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 96.0
+offset_bottom = 64.0
+texture = ExtResource("12_xsp7o")
+expand_mode = 1
 
 [connection signal="CustomerWasConsumed" from="Casino/Customer" to="Casino" method="OnCustomerConsumed"]
 [connection signal="toggled" from="Casino/ParlayDoor" to="Casino/AnimationPlayer" method="_on_parlay_door_toggled" binds= [false]]

@@ -15,6 +15,8 @@ public partial class Casino : Sprite2D
 	[Signal]
 	public delegate void CasinoHasNoResourcesEventHandler();
 	
+	private Label upgrades;
+	
 	public int UpgradeResources
 	{
 		get => upgradeResources;
@@ -24,6 +26,7 @@ public partial class Casino : Sprite2D
 				EmitSignal(SignalName.CasinoHasResources);
 			else if (upgradeResources != 0 && value == 0)
 				EmitSignal(SignalName.CasinoHasNoResources);
+			upgrades.Text = "" + value;
 			upgradeResources = value;
 		}
 	}
@@ -68,6 +71,7 @@ public partial class Casino : Sprite2D
 		timeCounter = GetNode<Label>("TimeElapsed");
 		
 		moneyLabel = GetNode<Label>("Money");
+		upgrades = GetNode<Label>("Upgrades");;
 		
 		customer = (Customer)GetNode<Node2D>("Customer");
 		PrepCountersAndButtons();
