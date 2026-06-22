@@ -46,7 +46,7 @@ public partial class LottoMachine : Node2D
 	public LottoMachine()
 	{
 		// evilness
-		Evil = Global.Random.NextDouble(); // between 0 and 1
+		Evil = .1 + Global.Random.NextDouble() * .8; // between 0.1 and .9
 		
 		// condition
 		MaxCondition = Global.Random.Next(150, 250);
@@ -205,7 +205,7 @@ public partial class LottoMachine : Node2D
 	public delegate void PlayGameEventHandler(int cost);
 		
 	private Sprite2D machineSprite;	
-	private LottoStatCard statCard;
+	public LottoStatCard statCard;
 		
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -334,6 +334,74 @@ public partial class LottoMachine : Node2D
 		NewMachineNovelty -= noveltyDrain;
 		
 		UpdateStatCard();
+	}
+	
+	public bool UpgradeCondition()
+	{
+		if (machineCondition >= MaxCondition) return false;
+		
+		machineCondition += conditionDrain * Global.Random.Next(6, 20);
+		machineCondition = Math.Min(MaxCondition, machineCondition);
+		
+		return true;
+	}
+	
+	public bool UpgradeAttractiveness()
+	{
+		baseAttractiveness += 2 * Global.Random.Next(8, 14);
+		newMachineNovelty += noveltyDrain * Global.Random.Next(2, 12);
+		
+		return true;
+	}
+	
+	public bool UpgradePlayTime()
+	{
+		if (TimeToPlay == 100u) return false;
+		
+		TimeToPlay = (ulong)((double)TimeToPlay * (0.88 + (Global.Random.NextDouble() * 0.08)));
+		TimeToPlay = Math.Max(100u, TimeToPlay);
+		
+		return true;
+	}
+	
+	public bool UpgradeCost()
+	{
+		// look how dust can shove everything into one line so fucking impressive!
+		// how the fuck am i supposed to read this
+		int oldCostPerPlay = CostPerPlay;
+		CostPerPlay = (int)((double)CostPerPlay * (1.02 + (Global.Random.NextDouble() * 0.05)));
+		CostPerPlay += oldCostPerPlay == CostPerPlay ? 2 : 0;
+		return true;
+	}
+	
+	public bool UpgradePayoutChances()
+	{
+		return false;
+	}
+	
+	public bool UpgradePayoutAmounts()
+	{
+		return false;
+	}
+	
+	public bool UpgradeEvil()
+	{
+		if (Evil <= .1) return false;
+		
+		Evil -= Global.Random.NextDouble() * 0.07;
+		Evil = Math.Max(Evil, .1);
+		
+		return true;
+	}
+	
+	public bool UpgradeChaos()
+	{
+		if (Evil >= .9) return false;
+		
+		Evil += Global.Random.NextDouble() * 0.14;
+		Evil = Math.Min(Evil, .92);
+		
+		return true;
 	}
 }
 

@@ -9,6 +9,8 @@ public partial class Casino : Sprite2D
 	public int Taxes; // Daily property taxes that drain your resources
 
 	public float Reputation; // 1-10 / 5 star system
+	
+	public int UpgradeResources = 10000;
 
 	private int maxNumberMachines = 16; // how many machines you can have at once
 	private int MaxNumberMachines
@@ -87,6 +89,59 @@ public partial class Casino : Sprite2D
 		
 		bool success = counters[counter].AddMachine(machine, slot);
 		machine.PlayGame += OnPlayGameSignal;
+		
+		// i'm sorry for the stupid shitty code but
+		// i'm not gonna figure the fuck out of func delegates or
+		// whatever the fuck fuck you
+		// FUCK C#
+		machine.statCard.upgradeCondition.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradeCondition()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradeAttractiveness.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradeAttractiveness()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradePlayTime.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradePlayTime()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradeCost.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradeCost()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradeChances.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradePayoutChances()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradePayouts.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradePayoutAmounts()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradeEvil.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradeEvil()) return;
+			UpgradeResources--;
+		};
+		machine.statCard.upgradeChaos.Pressed += () => 
+		{
+			if (UpgradeResources <= 0) return;
+			if (!machine.UpgradeChaos()) return;
+			UpgradeResources--;
+		};
 
 		if (!success)
 			GD.Print("failed to add machine AAAAAAA");

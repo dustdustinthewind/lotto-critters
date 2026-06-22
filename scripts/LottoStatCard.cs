@@ -69,6 +69,7 @@ public partial class LottoStatCard : ColorRect
 	public Button upgradeChances;
 	public Button upgradePayouts;
 	public Button upgradeEvil;
+	public Button upgradeChaos;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -102,6 +103,7 @@ public partial class LottoStatCard : ColorRect
 		upgradeChances = GetNode<Button>(upgradeLocation + "Upgrades2/Chances");
 		upgradePayouts = GetNode<Button>(upgradeLocation + "Upgrades2/Payouts");
 		upgradeEvil = GetNode<Button>(upgradeLocation + "Upgrades2/Evil");
+		upgradeChaos = GetNode<Button>(upgradeLocation + "Upgrades2/IncreaseEvil");
 		
 		upgradeCondition.Pressed += DisableButtons;
 		upgradeAttractiveness.Pressed += DisableButtons;
@@ -110,6 +112,7 @@ public partial class LottoStatCard : ColorRect
 		upgradeChances.Pressed += DisableButtons;
 		upgradePayouts.Pressed += DisableButtons;
 		upgradeEvil.Pressed += DisableButtons;
+		upgradeChaos.Pressed += DisableButtons;
 		
 		ZIndex = 99;
 		
@@ -134,6 +137,7 @@ public partial class LottoStatCard : ColorRect
 		upgradeChances.Disabled = false;
 		upgradePayouts.Disabled = false;
 		upgradeEvil.Disabled = false;
+		upgradeChaos.Disabled = false;
 		
 		enabled = true;
 		
@@ -149,6 +153,7 @@ public partial class LottoStatCard : ColorRect
 		upgradeChances.Disabled = true;
 		upgradePayouts.Disabled = true;
 		upgradeEvil.Disabled = true;
+		upgradeChaos.Disabled = false;
 		
 		enabled = false;
 		

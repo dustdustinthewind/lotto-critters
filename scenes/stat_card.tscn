@@ -277,3 +277,10 @@ size_flags_horizontal = 4
 disabled = true
 text = "Banish Evil"
 expand_icon = true
+
+[node name="IncreaseEvil" type="Button" parent="ColorRect/HBoxContainer/Upgrades/HBoxContainer/Upgrades2" unique_id=1346889803]
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Welcome Chaos"
+expand_icon = true
