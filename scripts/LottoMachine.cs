@@ -297,6 +297,12 @@ public partial class LottoMachine : Node2D
 		{
 			refractoring = false;
 		}
+
+		if(machineCondition <= 0)
+		{
+			//MachineDestroyed();
+		}
+
 	}
 	
 	private PackedScene moneyNotif = (PackedScene)GD.Load("res://scenes/money_notification.tscn");	
@@ -432,6 +438,12 @@ public partial class LottoMachine : Node2D
 		
 		return true;
 	}
+
+
+
+
+
+
 }
 
 public enum PayoutType
@@ -533,4 +545,8 @@ public struct Payout
 		
 		return payoutToReturn;
 	}
+
+
+
+
 }

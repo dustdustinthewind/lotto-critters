@@ -10,6 +10,8 @@ public partial class Casino : Sprite2D
 
 	public float Reputation; // 1-10 / 5 star system
 
+	public static bool wallGunActive;
+
 	public static int customerCount;
 	public int customerRate;
 
@@ -61,13 +63,20 @@ public partial class Casino : Sprite2D
 	}
 	
 	private Label timeCounter;
+	private Label moneyLabel;
 	
 	public static Counter[] counters = new Counter[3];
-	
-	// debug/testing
-	private PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
+
+	private Sprite2D Crosshair;
+
+
+	private TextureButton parlayDoor;
+	private TextureButton VIPDoor;
+	private TextureButton wallGun;
 
 	private Button parlayButton;
+
+	private PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
 	private PackedScene customerScene = (PackedScene)GD.Load("res://scenes/customer.tscn");
 
 	// Called when the node enters the scene tree for the first time.
@@ -79,13 +88,19 @@ public partial class Casino : Sprite2D
 		
 		moneyLabel = GetNode<Label>("Money");
 		upgrades = GetNode<Label>("Upgrades");;
+
+		Crosshair = GetNode<Sprite2D>("Crosshair");
 		
 		parlayDoor = GetNode<TextureButton>("ParlayDoor");
 		VIPDoor = GetNode<TextureButton>("VIPDoor");
 		parlayButton = GetNode<Button>("ParlayButton");
+		wallGun = GetNode<TextureButton>("WallGun");
 		
 		customer = (Customer)GetNode<Node2D>("Customer");
+
 		PrepCountersAndButtons();
+		wallGun.Toggled += GunActive;
+
 
 		customerCount = 0;
 
@@ -110,8 +125,7 @@ public partial class Casino : Sprite2D
 		}
 	}
 
-	private TextureButton parlayDoor;
-	private TextureButton VIPDoor;
+
 	
 	// counter = which counter
 	// slot = which slot on counter
@@ -218,8 +232,6 @@ public partial class Casino : Sprite2D
 			c.EnableButtons();
 	}
 	
-	private Label moneyLabel;
-	
 	private void OnCustomerConsumed()
 	{
 		GD.Print("customer ated");
@@ -293,6 +305,8 @@ public partial class Casino : Sprite2D
 		if(customerCount <= 16)
 		CreateCustomer();
 
+
+
 	}
 	
 	public override void _Input(InputEvent @event)
@@ -313,8 +327,27 @@ public partial class Casino : Sprite2D
 				theChild.GlobalPosition = mouseMoveEvent.Position;
 				theChild.GlobalPosition += new Vector2(50,0);
 			}
+			if(wallGunActive == true)
+				Crosshair.Position = mouseMoveEvent.Position;
+				else
+				Crosshair.Position = new Vector2(-100,-100);
+
+
 		}
 	}
+
+
+	// Lets Kill a Machine
+
+	public void GunActive(bool isToggled)
+	{
+		wallGunActive = isToggled;
+		GD.Print("LETS KILL");
+	}
+
+
+
+
 
 		// HERE BE CUSTOMER LOGICS and dragons
 
@@ -344,7 +377,6 @@ public partial class Casino : Sprite2D
 		return(lottoChoice);
 
 	}
-
 
 
 

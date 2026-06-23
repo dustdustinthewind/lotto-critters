@@ -9,10 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://bc2v40ulj2bup" path="res://textures/parlay door open.png" id="7_7pvxh"]
 [ext_resource type="Texture2D" uid="uid://bxqrdcgfjrong" path="res://textures/vip door.png" id="8_y3xxt"]
 [ext_resource type="Texture2D" uid="uid://b386eysxckoqt" path="res://textures/vip door open.png" id="9_y3xxt"]
+[ext_resource type="Texture2D" uid="uid://bmfjtv3nt41yl" path="res://textures/GunWall.png" id="10_vgks2"]
 [ext_resource type="Texture2D" uid="uid://c2ayh5v5jakgq" path="res://textures/spotlight.png" id="10_xsp7o"]
+[ext_resource type="Texture2D" uid="uid://cyu102hc5p1ot" path="res://textures/GunWallHover.png" id="11_dylgi"]
 [ext_resource type="Script" uid="uid://8xeekt2jourj" path="res://scripts/animation_player.gd" id="11_l5cgh"]
 [ext_resource type="Texture2D" uid="uid://drghl14ntxyti" path="res://textures/spotlight_light_shaft.png" id="11_vgks2"]
 [ext_resource type="Texture2D" uid="uid://e18w032peauf" path="res://textures/upgrade gore bucket.png" id="12_xsp7o"]
+[ext_resource type="Texture2D" uid="uid://dxbpapjm5nu2h" path="res://textures/Crosshair.png" id="16_jrhyn"]
 
 [sub_resource type="Animation" id="Animation_vgks2"]
 length = 2.8
@@ -217,6 +220,15 @@ toggle_mode = true
 texture_normal = ExtResource("8_y3xxt")
 texture_hover = ExtResource("9_y3xxt")
 
+[node name="WallGun" type="TextureButton" parent="Casino" unique_id=1398759638]
+offset_left = 502.0
+offset_top = 24.0
+offset_right = 702.0
+offset_bottom = 71.0
+toggle_mode = true
+texture_normal = ExtResource("10_vgks2")
+texture_hover = ExtResource("11_dylgi")
+
 [node name="Spotlight" type="Sprite2D" parent="Casino" unique_id=1477530166]
 position = Vector2(67.80913, -69.150955)
 rotation = 0.4027696
@@ -306,6 +318,9 @@ offset_right = 8.0
 offset_bottom = 8.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Casino/MusicToggle" unique_id=1107500473]
+
+[node name="Crosshair" type="Sprite2D" parent="Casino" unique_id=1285649682]
+texture = ExtResource("16_jrhyn")
 
 [connection signal="CustomerWasConsumed" from="Casino/Customer" to="Casino" method="OnCustomerConsumed"]
 [connection signal="toggled" from="Casino/ParlayDoor" to="Casino/AnimationPlayer" method="_on_parlay_door_toggled" binds= [false]]

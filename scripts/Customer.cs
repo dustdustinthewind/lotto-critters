@@ -55,6 +55,14 @@ public partial class Customer : Node2D
 
 
 		//GD.Print(firstDestinationReached+":"+secondDestinationReached+":"+finalDestinationReached);
+
+			if(firstDestination == Vector2.Zero)
+				firstDestinationReached = true;
+			else if(secondDestination == Vector2.Zero)
+				secondDestinationReached = true;
+			else if(finalDestination == Vector2.Zero)
+				finalDestinationReached = true;
+
 		
 		if (!firstDestinationReached)
 		{
