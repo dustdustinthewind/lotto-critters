@@ -73,7 +73,7 @@ public partial class Casino : Sprite2D
 	private TextureButton parlayDoor;
 	private TextureButton VIPDoor;
 	private TextureButton wallGun;
-
+	private TextureButton musicToggle;
 	private Button parlayButton;
 
 	private PackedScene testMachine = (PackedScene)GD.Load("res://scenes/lotto_machine.tscn");
@@ -95,12 +95,14 @@ public partial class Casino : Sprite2D
 		VIPDoor = GetNode<TextureButton>("VIPDoor");
 		parlayButton = GetNode<Button>("ParlayButton");
 		wallGun = GetNode<TextureButton>("WallGun");
+		musicToggle = GetNode<TextureButton>("MusicToggle");
 		
 		customer = (Customer)GetNode<Node2D>("Customer");
 
 		PrepCountersAndButtons();
 		wallGun.Toggled += GunActive;
-
+		musicToggle.Toggled += PlayMusic;
+		PlayMusic(false);
 
 		customerCount = 0;
 
@@ -377,6 +379,23 @@ public partial class Casino : Sprite2D
 		return(lottoChoice);
 
 	}
+
+
+	// MUSIC MANAGER BELOW
+
+
+	public void PlayMusic(bool isToggled)
+	{
+		if(!isToggled)
+		GetNode<AudioStreamPlayer>("Music").Play();
+		else
+		GetNode<AudioStreamPlayer>("Music").Stop();
+
+
+	}
+
+
+
 
 
 

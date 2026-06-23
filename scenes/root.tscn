@@ -16,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://drghl14ntxyti" path="res://textures/spotlight_light_shaft.png" id="11_vgks2"]
 [ext_resource type="Texture2D" uid="uid://e18w032peauf" path="res://textures/upgrade gore bucket.png" id="12_xsp7o"]
 [ext_resource type="Texture2D" uid="uid://dxbpapjm5nu2h" path="res://textures/Crosshair.png" id="16_jrhyn"]
+[ext_resource type="Texture2D" uid="uid://x6rice460gju" path="res://textures/music_on_toggle.png" id="17_gt4lb"]
+[ext_resource type="AudioStream" uid="uid://dv2nsc7m7rwh3" path="res://music/IN THE LOBBY.mp3" id="17_ya6yc"]
+[ext_resource type="Texture2D" uid="uid://cvv8m20wqb4oy" path="res://textures/music_off_toggle.png" id="18_ya6yc"]
 
 [sub_resource type="Animation" id="Animation_vgks2"]
 length = 2.8
@@ -310,17 +313,21 @@ text = "PARLAY!"
 label_settings = SubResource("LabelSettings_vgks2")
 metadata/_edit_lock_ = true
 
-[node name="MusicToggle" type="Node2D" parent="Casino" unique_id=1899482286]
-position = Vector2(197, 157)
-
-[node name="Button" type="Button" parent="Casino/MusicToggle" unique_id=519170392]
-offset_right = 8.0
-offset_bottom = 8.0
-
-[node name="Sprite2D" type="Sprite2D" parent="Casino/MusicToggle" unique_id=1107500473]
-
 [node name="Crosshair" type="Sprite2D" parent="Casino" unique_id=1285649682]
 texture = ExtResource("16_jrhyn")
+
+[node name="Music" type="AudioStreamPlayer" parent="Casino" unique_id=921076094]
+stream = ExtResource("17_ya6yc")
+volume_db = -15.0
+
+[node name="MusicToggle" type="TextureButton" parent="Casino" unique_id=1629833278]
+offset_left = 101.0
+offset_top = 578.0
+offset_right = 181.0
+offset_bottom = 658.0
+toggle_mode = true
+texture_normal = ExtResource("17_gt4lb")
+texture_pressed = ExtResource("18_ya6yc")
 
 [connection signal="CustomerWasConsumed" from="Casino/Customer" to="Casino" method="OnCustomerConsumed"]
 [connection signal="toggled" from="Casino/ParlayDoor" to="Casino/AnimationPlayer" method="_on_parlay_door_toggled" binds= [false]]
